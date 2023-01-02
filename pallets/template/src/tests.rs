@@ -1,5 +1,8 @@
-use crate::{mock::*, Error, Event};
+
+
+use super::*;
 use frame_support::{assert_noop, assert_ok};
+use mock::*;
 
 #[test]
 fn it_works_for_default_value() {
@@ -14,7 +17,7 @@ fn it_works_for_default_value() {
 		System::assert_last_event(Event::SomethingStored { something: 42, who: 1 }.into());
 	});
 }
-
+#[cfg(test)]
 #[test]
 fn correct_error_for_none_value() {
 	new_test_ext().execute_with(|| {

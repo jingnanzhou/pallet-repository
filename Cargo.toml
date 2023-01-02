@@ -1,8 +1,8 @@
 [workspace]
 members = [
-    "node",
+    "nodes/poc-template",
     "pallets/template",
-    "runtime",
+    "runtimes/poc-runtime",
 ]
 [profile.release]
 panic = "unwind"
