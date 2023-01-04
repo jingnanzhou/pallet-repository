@@ -3,6 +3,8 @@ members = [
     "nodes/poc-template",
     "pallets/template",
     "runtimes/poc-runtime",
+    "runtimes/mvp-runtime",
+
 ]
 [profile.release]
 panic = "unwind"
