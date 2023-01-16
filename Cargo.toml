@@ -1,6 +1,15 @@
 [workspace]
 members = [
     "nodes/poc-template",
+    "nodes/mvp-template/cli",
+
+    "nodes/mvp-template/executor",
+    "nodes/mvp-template/inspect",
+    "nodes/mvp-template/primitives",
+    "nodes/mvp-template/rpc",
+    "nodes/mvp-template/testing",
+
+
     "pallets/template",
     "runtimes/poc-runtime",
     "runtimes/mvp-runtime",
