@@ -120,9 +120,9 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 }
 
 fn extrinsic_set_time(now: u64) -> OpaqueExtrinsic {
-	mvp-runtime::UncheckedExtrinsic {
+	mvp_runtime::UncheckedExtrinsic {
 		signature: None,
-		function: mvp-runtime::RuntimeCall::Timestamp(pallet_timestamp::Call::set { now }),
+		function: mvp_runtime::RuntimeCall::Timestamp(pallet_timestamp::Call::set { now }),
 	}
 	.into()
 }
