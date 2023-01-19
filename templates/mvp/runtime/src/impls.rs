@@ -18,18 +18,17 @@
 //! Some configurable implementations as associated type for the substrate runtime.
 
 use crate::{
-	AccountId, Assets, Authorship, Balances, Hash, NegativeImbalance, Runtime,
-	RuntimeCall,
+	AccountId, Assets, Authorship, Balances,  NegativeImbalance, Runtime,
+	
 };
+
 use frame_support::{
-	pallet_prelude::*,
 	traits::{
 		fungibles::{Balanced, CreditOf},
 		Currency, OnUnbalanced,
 	},
 };
 use pallet_asset_tx_payment::HandleCredit;
-use sp_std::prelude::*;
 
 pub struct Author;
 impl OnUnbalanced<NegativeImbalance> for Author {
@@ -39,7 +38,7 @@ impl OnUnbalanced<NegativeImbalance> for Author {
 		}
 	}
 }
-
+ 
 /// A `HandleCredit` implementation that naively transfers the fees to the block author.
 /// Will drop and burn the assets in case the transfer fails.
 pub struct CreditToBlockAuthor;

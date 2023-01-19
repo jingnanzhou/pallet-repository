@@ -1,18 +1,17 @@
 [workspace]
 members = [
-    "nodes/poc-template",
-    "nodes/mvp-template/cli",
+    "templates/poc/node",
+    "templates/poc/runtime",
 
-    "nodes/mvp-template/executor",
-    "nodes/mvp-template/inspect",
-    "nodes/mvp-template/primitives",
-    "nodes/mvp-template/rpc",
-    "nodes/mvp-template/testing",
-
+    "templates/mvp/node/cli",
+    "templates/mvp/node/executor",
+    "templates/mvp/node/inspect",
+    "templates/mvp/node/primitives",
+    "templates/mvp/node/rpc",
+    "templates/mvp/node/testing",
+    "templates/mvp/runtime",
 
     "pallets/template",
-    "runtimes/poc-runtime",
-    "runtimes/mvp-runtime",
 
 ]
 [profile.release]

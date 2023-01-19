@@ -21,7 +21,7 @@ tempfile = "3.1.0"
 frame-system = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.35"  }
 node-executor = { version = "3.0.0-dev", path = "../executor" }
 node-primitives = { version = "2.0.0", path = "../primitives" }
-mvp-runtime = { version = "3.0.0-dev", path = "../../../runtimes/mvp-runtime" }
+mvp-runtime = { version = "3.0.0-dev", path = "../../runtime" }
 pallet-assets = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.35" }
 pallet-asset-tx-payment = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.35" }
 pallet-transaction-payment = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.35"  }

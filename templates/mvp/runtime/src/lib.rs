@@ -22,7 +22,7 @@
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 512.
 #![recursion_limit = "512"]
 
-use codec::{Decode, Encode, MaxEncodedLen};
+use codec::{Decode, Encode};
 use frame_election_provider_support::{
 	onchain, BalancingConfig, ElectionDataProvider, SequentialPhragmen, VoteWeight,
 };
@@ -32,21 +32,21 @@ use frame_support::{
 	pallet_prelude::Get,
 	parameter_types,
 	traits::{
-		fungible::ItemOf, AsEnsureOriginWithArg, ConstBool, ConstU128, ConstU16, ConstU32,
-		Currency, EitherOfDiverse, EqualPrivilegeOnly, Everything, Imbalance, InstanceFilter,
-		KeyOwnerProofSystem, LockIdentifier, Nothing, OnUnbalanced, U128CurrencyToVote,
-		WithdrawReasons,
+		AsEnsureOriginWithArg,  ConstU128, ConstU16, ConstU32,
+		Currency, EitherOfDiverse,  Everything, Imbalance, 
+		KeyOwnerProofSystem,  OnUnbalanced, U128CurrencyToVote,
+		
 	},
 	weights::{
 		constants::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight,  WEIGHT_REF_TIME_PER_SECOND},
 		ConstantMultiplier, IdentityFee, Weight,
 	},
-	PalletId, RuntimeDebug,
+	PalletId, 
 };
 
 use frame_system::{
 	limits::{BlockLength, BlockWeights},
-	EnsureRoot, EnsureRootWithSuccess, EnsureSigned, EnsureWithSuccess,
+	EnsureRoot,  EnsureSigned, EnsureWithSuccess,
 };
 pub use node_primitives::{AccountId, Signature};
 use node_primitives::{AccountIndex, Balance, BlockNumber, Hash, Index, Moment};
@@ -306,7 +306,7 @@ impl pallet_balances::Config for Runtime {
 }
 
 
-
+ 
 parameter_types! {
 	// phase durations. 1/4 of the last session for each.
 	pub const SignedPhase: u32 = EPOCH_DURATION_IN_BLOCKS / 4;
@@ -342,6 +342,7 @@ frame_election_provider_support::generate_solution_type!(
 	>(16)
 );
 
+ 
 parameter_types! {
 	pub MaxNominations: u32 = <NposSolution16 as frame_election_provider_support::NposSolution>::LIMIT as u32;
 	pub MaxElectingVoters: u32 = 40_000;
@@ -369,7 +370,7 @@ impl pallet_election_provider_multi_phase::BenchmarkingConfig for ElectionProvid
 }
 
 
-
+ 
 /// Maximum number of iterations for balancing that will be executed in the embedded OCW
 /// miner of election provider multi phase.
 pub const MINER_MAX_ITERATIONS: u32 = 10;
@@ -523,6 +524,7 @@ impl pallet_transaction_payment::Config for Runtime {
 	>;
 }
 
+ 
 impl pallet_asset_tx_payment::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Fungibles = Assets;
@@ -561,8 +563,6 @@ impl pallet_assets::Config for Runtime {
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = ();
 }
-
-
 
 
 parameter_types! {
@@ -613,6 +613,7 @@ impl pallet_session::historical::Config for Runtime {
 	type FullIdentificationOf = pallet_staking::ExposureOf<Runtime>;
 }
 
+ 
 parameter_types! {
 	pub const PostUnbondPoolsWindow: u32 = 4;
 	pub const NominationPoolsPalletId: PalletId = PalletId(*b"py/nopls");
@@ -647,6 +648,7 @@ impl pallet_nomination_pools::Config for Runtime {
 	type PalletId = NominationPoolsPalletId;
 	type MaxPointsToBalance = MaxPointsToBalance;
 }
+
 
 
 parameter_types! {
@@ -688,7 +690,7 @@ impl pallet_treasury::Config for Runtime {
 	type MaxApprovals = MaxApprovals;
 	type SpendOrigin = EnsureWithSuccess<EnsureRoot<AccountId>, AccountId, MaxBalance>;
 }
-
+ 
 parameter_types! {
 	pub const BountyCuratorDeposit: Permill = Permill::from_percent(50);
 	pub const BountyValueMinimum: Balance = 5 * DOLLARS;
@@ -726,7 +728,6 @@ impl pallet_child_bounties::Config for Runtime {
 }
 
 
-
 pallet_staking_reward_curve::build! {
 	const REWARD_CURVE: PiecewiseLinear<'static> = curve!(
 		min_inflation: 0_025_000,
@@ -748,33 +749,6 @@ parameter_types! {
 	pub OffchainRepeat: BlockNumber = 5;
 	pub HistoryDepth: u32 = 84;
 }
-
-pub struct StakingBenchmarkingConfig;
-impl pallet_staking::BenchmarkingConfig for StakingBenchmarkingConfig {
-	type MaxNominators = ConstU32<1000>;
-	type MaxValidators = ConstU32<1000>;
-}
-
-
-parameter_types! {
-	pub const CouncilMotionDuration: BlockNumber = 5 * DAYS;
-	pub const CouncilMaxProposals: u32 = 100;
-	pub const CouncilMaxMembers: u32 = 100;
-}
-
-type CouncilCollective = pallet_collective::Instance1;
-impl pallet_collective::Config<CouncilCollective> for Runtime {
-	type RuntimeOrigin = RuntimeOrigin;
-	type Proposal = RuntimeCall;
-	type RuntimeEvent = RuntimeEvent;
-	type MotionDuration = CouncilMotionDuration;
-	type MaxProposals = CouncilMaxProposals;
-	type MaxMembers = CouncilMaxMembers;
-	type DefaultVote = pallet_collective::PrimeDefaultVote;
-	type WeightInfo = pallet_collective::weights::SubstrateWeight<Runtime>;
-}
-
-
 
 
 impl pallet_staking::Config for Runtime {
@@ -810,6 +784,35 @@ impl pallet_staking::Config for Runtime {
 	type OnStakerSlash = NominationPools;
 	type WeightInfo = pallet_staking::weights::SubstrateWeight<Runtime>;
 	type BenchmarkingConfig = StakingBenchmarkingConfig;
+
+
+}
+
+
+
+pub struct StakingBenchmarkingConfig;
+impl pallet_staking::BenchmarkingConfig for StakingBenchmarkingConfig {
+	type MaxNominators = ConstU32<1000>;
+	type MaxValidators = ConstU32<1000>;
+}
+
+
+parameter_types! {
+	pub const CouncilMotionDuration: BlockNumber = 5 * DAYS;
+	pub const CouncilMaxProposals: u32 = 100;
+	pub const CouncilMaxMembers: u32 = 100;
+}
+
+type CouncilCollective = pallet_collective::Instance1;
+impl pallet_collective::Config<CouncilCollective> for Runtime {
+	type RuntimeOrigin = RuntimeOrigin;
+	type Proposal = RuntimeCall;
+	type RuntimeEvent = RuntimeEvent;
+	type MotionDuration = CouncilMotionDuration;
+	type MaxProposals = CouncilMaxProposals;
+	type MaxMembers = CouncilMaxMembers;
+	type DefaultVote = pallet_collective::PrimeDefaultVote;
+	type WeightInfo = pallet_collective::weights::SubstrateWeight<Runtime>;
 }
 
 
@@ -818,16 +821,7 @@ impl pallet_sudo::Config for Runtime {
 	type RuntimeCall = RuntimeCall;
 }
 
-parameter_types! {
-	pub const ImOnlineUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
-	/// We prioritize im-online heartbeats over election solution submission.
-	pub const StakingUnsignedPriority: TransactionPriority = TransactionPriority::max_value() / 2;
-	pub const MaxAuthorities: u32 = 100;
-	pub const MaxKeys: u32 = 10_000;
-	pub const MaxPeerInHeartbeats: u32 = 10_000;
-	pub const MaxPeerDataEncodingSize: u32 = 1_000;
-}
-
+  
 impl<LocalCall> frame_system::offchain::CreateSignedTransaction<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
@@ -884,6 +878,15 @@ where
 }
 
 
+parameter_types! {
+	pub const ImOnlineUnsignedPriority: TransactionPriority = TransactionPriority::max_value();
+	/// We prioritize im-online heartbeats over election solution submission.
+	pub const StakingUnsignedPriority: TransactionPriority = TransactionPriority::max_value() / 2;
+	pub const MaxAuthorities: u32 = 100;
+	pub const MaxKeys: u32 = 10_000;
+	pub const MaxPeerInHeartbeats: u32 = 10_000;
+	pub const MaxPeerDataEncodingSize: u32 = 1_000;
+}
 
 
 
@@ -899,7 +902,7 @@ impl pallet_im_online::Config for Runtime {
 	type MaxPeerInHeartbeats = MaxPeerInHeartbeats;
 	type MaxPeerDataEncodingSize = MaxPeerDataEncodingSize;
 }
-
+ 
 impl pallet_offences::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type IdentificationTuple = pallet_session::historical::IdentificationTuple<Self>;
@@ -953,31 +956,30 @@ construct_runtime!(
 		Indices: pallet_indices,
 		Balances: pallet_balances,
 		TransactionPayment: pallet_transaction_payment,
-		AssetTxPayment: pallet_asset_tx_payment,		
-		Staking: pallet_staking,
 		Session: pallet_session,
-		Council: pallet_collective::<Instance1>,
-		NominationPools: pallet_nomination_pools,
-		Treasury: pallet_treasury,
-		Assets: pallet_assets,		
 		Mmr: pallet_mmr,
-
-
-		Bounties: pallet_bounties,
-		ChildBounties: pallet_child_bounties,
-		VoterList: pallet_bags_list::<Instance1>,
-		ElectionProviderMultiPhase: pallet_election_provider_multi_phase,
-
-
 
 		Grandpa: pallet_grandpa,
 		Sudo: pallet_sudo,
 		ImOnline: pallet_im_online,
 		AuthorityDiscovery: pallet_authority_discovery,
-		Offences: pallet_offences,
 		Historical: pallet_session_historical::{Pallet},
+		Treasury: pallet_treasury,
+		Council: pallet_collective::<Instance1>,
+		Staking: pallet_staking,
+		Offences: pallet_offences,
+		VoterList: pallet_bags_list::<Instance1>,
+		ElectionProviderMultiPhase: pallet_election_provider_multi_phase,
+		NominationPools: pallet_nomination_pools,
+		Assets: pallet_assets,		
+		AssetTxPayment: pallet_asset_tx_payment,
+
+		Bounties: pallet_bounties,
+		ChildBounties: pallet_child_bounties,
 
 		RootTesting: pallet_root_testing,
+
+
 
 	}
 );
@@ -1055,22 +1057,22 @@ mod benches {
 		[pallet_grandpa, Grandpa]
 		[pallet_im_online, ImOnline]
 		[pallet_indices, Indices]
-		[pallet_offences, OffencesBench::<Runtime>]
-		[pallet_session, SessionBench::<Runtime>]
 		[pallet_staking, Staking]
 		[frame_system, SystemBench::<Runtime>]
 		[pallet_timestamp, Timestamp]
-		[pallet_nomination_pools, NominationPoolsBench::<Runtime>]
-		[pallet_collective, Council]
+		[pallet_session, SessionBench::<Runtime>]
+		[pallet_mmr, Mmr]
 		[pallet_treasury, Treasury]
-		[pallet_assets, Assets]
-		[pallet_bounties, Bounties]
-		[pallet_child_bounties, ChildBounties]
+		[pallet_collective, Council]
+		[pallet_offences, OffencesBench::<Runtime>]
 		[pallet_bags_list, VoterList]
 		[pallet_election_provider_multi_phase, ElectionProviderMultiPhase]
 		[pallet_election_provider_support_benchmarking, EPSBench::<Runtime>]
-		[pallet_mmr, Mmr]
+		[pallet_nomination_pools, NominationPoolsBench::<Runtime>]
 
+		[pallet_assets, Assets]
+		[pallet_bounties, Bounties]
+		[pallet_child_bounties, ChildBounties]
 
 
 	);
@@ -1125,7 +1127,7 @@ impl_runtime_apis! {
 			Executive::validate_transaction(source, tx, block_hash)
 		}
 	}
-
+ 
 	impl sp_offchain::OffchainWorkerApi<Block> for Runtime {
 		fn offchain_worker(header: &<Block as BlockT>::Header) {
 			Executive::offchain_worker(header)
@@ -1167,7 +1169,7 @@ impl_runtime_apis! {
 				.map(fg_primitives::OpaqueKeyOwnershipProof::new)
 		}
 	}
-
+ 
 	impl pallet_nomination_pools_runtime_api::NominationPoolsApi<Block, AccountId, Balance> for Runtime {
 		fn pending_rewards(member_account: AccountId) -> Balance {
 			NominationPools::pending_rewards(member_account).unwrap_or_default()
@@ -1390,17 +1392,21 @@ impl_runtime_apis! {
 			// issues. To get around that, we separated the Session benchmarks into its own crate,
 			// which is why we need these two lines below.
 			use pallet_session_benchmarking::Pallet as SessionBench;
-			use pallet_offences_benchmarking::Pallet as OffencesBench;
-			use pallet_election_provider_support_benchmarking::Pallet as EPSBench;
-			use frame_system_benchmarking::Pallet as SystemBench;
-			use baseline::Pallet as BaselineBench;
-			use pallet_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
 			impl pallet_session_benchmarking::Config for Runtime {}
-			impl pallet_offences_benchmarking::Config for Runtime {}
-			impl pallet_election_provider_support_benchmarking::Config for Runtime {}
 			impl frame_system_benchmarking::Config for Runtime {}
 			impl baseline::Config for Runtime {}
+
+
+			use frame_system_benchmarking::Pallet as SystemBench;
+			use baseline::Pallet as BaselineBench;
+
+ 
+			use pallet_offences_benchmarking::Pallet as OffencesBench;
+			use pallet_election_provider_support_benchmarking::Pallet as EPSBench;
+			use pallet_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
+			impl pallet_offences_benchmarking::Config for Runtime {}
+			impl pallet_election_provider_support_benchmarking::Config for Runtime {}
 			impl pallet_nomination_pools_benchmarking::Config for Runtime {}
 
 			use frame_support::traits::WhitelistedStorageKeys;
