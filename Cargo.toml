@@ -1,5 +1,38 @@
+[[bin]]
+name = "relay-mvp-runtime"
+path = "src/main.rs"
+
+[package]
+name = "pallet-repository"
+description = "Implementation of a `https://polkadot.network` node in Rust based on the Substrate framework."
+license = "GPL-3.0-only"
+rust-version = "1.64.0" # workspace properties
+readme = "README.md"
+authors.workspace = true
+edition.workspace = true
+version.workspace = true
+
+[workspace.package]
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2021"
+repository = "https://github.com/paritytech/polkadot.git"
+version = "0.9.35"
+
+
+
+
+
 [workspace]
 members = [
+
+    "templates/relay-mvp/node/cli",
+    "templates/relay-mvp/node/client",
+    "templates/relay-mvp/node/service",
+
+
+    "templates/relay-mvp/runtime",
+
+
     "templates/poc/node",
     "templates/poc/runtime",
 
@@ -15,4 +48,7 @@ members = [
 
 ]
 [profile.release]
+# Polkadot runtime requires unwinding.
 panic = "unwind"
+opt-level = 3
+
