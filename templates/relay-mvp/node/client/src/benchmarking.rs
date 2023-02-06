@@ -27,12 +27,12 @@ use crate::*;
 ///
 /// Note: Should only be used for benchmarking.
 pub struct RemarkBuilder {
-	client: Arc<Client>,
+	client: Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>,
 }
 
 impl RemarkBuilder {
 	/// Creates a new [`Self`] from the given client.
-	pub fn new(client: Arc<Client>) -> Self {
+	pub fn new(client: Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>) -> Self {
 		Self { client }
 	}
 }
@@ -47,19 +47,19 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for RemarkBuilder {
 	}
 
 	fn build(&self, nonce: u32) -> std::result::Result<OpaqueExtrinsic, &'static str> {
-		with_client! {
-			self.client.as_ref(), client, {
-				use runtime::{RuntimeCall, SystemCall};
+//		with_client! {
+//			self.client.as_ref(), client, {
+				use relay_mvp_runtime::{RuntimeCall, SystemCall};
 
 				let call = RuntimeCall::System(SystemCall::remark { remark: vec![] });
 				let signer = Sr25519Keyring::Bob.pair();
 
 				let period = polkadot_runtime_common::BlockHashCount::get().checked_next_power_of_two().map(|c| c / 2).unwrap_or(2) as u64;
-				let genesis = client.usage_info().chain.best_hash;
+				let genesis = self.client.usage_info().chain.best_hash;
 
-				Ok(client.sign_call(call, nonce, 0, period, genesis, signer))
-			}
-		}
+				Ok(self.client.sign_call(call, nonce, 0, period, genesis, signer))
+//			}
+//		}
 	}
 }
 
@@ -67,7 +67,7 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for RemarkBuilder {
 ///
 /// Note: Should only be used for benchmarking.
 pub struct TransferKeepAliveBuilder {
-	client: Arc<Client>,
+	client: Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>,
 	dest: AccountId,
 	value: Balance,
 }
@@ -75,7 +75,7 @@ pub struct TransferKeepAliveBuilder {
 impl TransferKeepAliveBuilder {
 	/// Creates a new [`Self`] from the given client and the arguments for the extrinsics.
 
-	pub fn new(client: Arc<Client>, dest: AccountId, value: Balance) -> Self {
+	pub fn new(client: Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>, dest: AccountId, value: Balance) -> Self {
 		Self { client, dest, value }
 	}
 }
@@ -90,9 +90,9 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for TransferKeepAliveBuilder {
 	}
 
 	fn build(&self, nonce: u32) -> std::result::Result<OpaqueExtrinsic, &'static str> {
-		with_client! {
-			self.client.as_ref(), client, {
-				use runtime::{RuntimeCall, BalancesCall};
+//		with_client! {
+//			self.client.as_ref(), client, {
+				use relay_mvp_runtime::{RuntimeCall, BalancesCall};
 
 				let call = RuntimeCall::Balances(BalancesCall::transfer_keep_alive {
 					dest: self.dest.clone().into(),
@@ -101,11 +101,11 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for TransferKeepAliveBuilder {
 				let signer = Sr25519Keyring::Bob.pair();
 
 				let period = polkadot_runtime_common::BlockHashCount::get().checked_next_power_of_two().map(|c| c / 2).unwrap_or(2) as u64;
-				let genesis = client.usage_info().chain.best_hash;
+				let genesis = self.client.usage_info().chain.best_hash;
 
-				Ok(client.sign_call(call, nonce, 0, period, genesis, signer))
-			}
-		}
+				Ok(self.client.sign_call(call, nonce, 0, period, genesis, signer))
+//			}
+//		}
 	}
 }
 
@@ -130,7 +130,7 @@ trait BenchmarkCallSigner<RuntimeCall: Encode + Clone, Signer: Pair> {
 }
 
 impl BenchmarkCallSigner<relay_mvp_runtime::RuntimeCall, sp_core::sr25519::Pair>
-	for FullClient<relay_mvp_runtime::RuntimeApi, WestendExecutorDispatch>
+	for FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>
 {
 	fn sign_call(
 		&self,
@@ -214,12 +214,12 @@ pub trait ExistentialDepositProvider {
 	fn existential_deposit(&self) -> Balance;
 }
 
-impl ExistentialDepositProvider for Client {
+impl ExistentialDepositProvider for  FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch> {
 	fn existential_deposit(&self) -> Balance {
-		with_client! {
-			self,
-			_client,
-			runtime::ExistentialDeposit::get()
-		}
+//		with_client! {
+//			self,
+//			_client,
+			relay_mvp_runtime::ExistentialDeposit::get()
+//		}
 	}
 }

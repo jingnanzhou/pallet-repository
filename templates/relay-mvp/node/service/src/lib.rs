@@ -81,16 +81,14 @@ use telemetry::TelemetryWorker;
 #[cfg(feature = "full-node")]
 use telemetry::{Telemetry, TelemetryWorkerHandle};
 
-
-#[cfg(feature = "westend-native")]
-pub use polkadot_client::WestendExecutorDispatch;
+pub use relay_mvp_client::RelayExecutorDispatch;
 
 
 pub use chain_spec::{WestendChainSpec};
 pub use consensus_common::{block_validation::Chain, Proposal, SelectChain};
 use mmr_gadget::MmrGadget;
 #[cfg(feature = "full-node")]
-pub use polkadot_client::{
+pub use relay_mvp_client::{
 	AbstractClient, Client, ClientHandle, ExecuteWithClient, FullBackend, FullClient,
 	RuntimeApiCollection,
 };
@@ -114,6 +112,8 @@ pub use sp_runtime::{
 
 #[cfg(feature = "westend-native")]
 pub use relay_mvp_runtime;
+
+
 
 /// The maximum number of active leaves we forward to the [`Overseer`] on startup.
 #[cfg(any(test, feature = "full-node"))]
@@ -1275,7 +1275,7 @@ pub fn new_chain_ops(
 	jaeger_agent: Option<std::net::SocketAddr>,
 ) -> Result<
 	(
-		Arc<Client>,
+		Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>,
 		Arc<FullBackend>,
 		sc_consensus::BasicQueue<Block, PrefixedMemoryDB<BlakeTwo256>>,
 		TaskManager,
@@ -1286,7 +1286,7 @@ pub fn new_chain_ops(
 
 	let telemetry_worker_handle = None;
 
-	let basics = new_partial_basics::<relay_mvp_runtime::RuntimeApi, WestendExecutorDispatch>(
+	let basics = new_partial_basics::<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>(
 		config,
 		jaeger_agent,
 		telemetry_worker_handle,
@@ -1296,12 +1296,12 @@ pub fn new_chain_ops(
 	let chain_selection = LongestChain::new(basics.backend.clone());
 
 	let service::PartialComponents { client, backend, import_queue, task_manager, .. } =
-		new_partial::<relay_mvp_runtime::RuntimeApi, WestendExecutorDispatch, LongestChain<_, Block>>(
+		new_partial::<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch, LongestChain<_, Block>>(
 			&mut config,
 			basics,
 			chain_selection,
 		)?;
-	Ok((Arc::new(Client::Westend(client)), backend, import_queue, task_manager))
+	Ok((client, backend, import_queue, task_manager))
 }
 
 /// Build a full node.
@@ -1325,10 +1325,10 @@ pub fn build_full(
 	overseer_message_channel_override: Option<usize>,
 	malus_finality_delay: Option<u32>,
 	hwbench: Option<sc_sysinfo::HwBench>,
-) -> Result<NewFull<Client>, Error> {
+) -> Result<NewFull<Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>>, Error> {
 
 	#[cfg(feature = "westend-native")]
-	return new_full::<relay_mvp_runtime::RuntimeApi, WestendExecutorDispatch, _>(
+	return new_full::<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch, _>(
 			config,
 			is_collator,
 			grandpa_pause,
@@ -1341,8 +1341,8 @@ pub fn build_full(
 			overseer_message_channel_override,
 			malus_finality_delay,
 			hwbench,
-		)
-		.map(|full| full.with_client(Client::Westend));
+		);
+//		.map(|full| full.with_client(Client::Westend));
 
 	#[cfg(not(feature = "westend-native"))]
 	Err(Error::NoRuntime)
@@ -1356,7 +1356,7 @@ pub fn build_full(
 /// - Low level Babe and Grandpa consensus data.
 #[cfg(feature = "full-node")]
 pub fn revert_backend(
-	client: Arc<Client>,
+	client: Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>,
 	backend: Arc<FullBackend>,
 	blocks: BlockNumber,
 	config: Configuration,
@@ -1383,10 +1383,13 @@ pub fn revert_backend(
 	revert_approval_voting(parachains_db.clone(), hash)?;
 	revert_chain_selection(parachains_db, hash)?;
 	// Revert Substrate consensus related components
-	client.execute_with(RevertConsensus { blocks, backend })?;
 
+//	client.execute_with(RevertConsensus { blocks, backend })?;
+	RevertConsensus::execute_with_client::<_, _, FullBackend>(RevertConsensus { blocks, backend }, client.clone())? ;
 	Ok(())
 }
+
+
 
 fn revert_chain_selection(db: Arc<dyn Database>, hash: Hash) -> sp_blockchain::Result<()> {
 	let config = chain_selection_subsystem::Config {
@@ -1435,7 +1438,7 @@ impl ExecuteWithClient for RevertConsensus {
 		<Api as sp_api::ApiExt<Block>>::StateBackend: sp_api::StateBackend<BlakeTwo256>,
 		Backend: sc_client_api::Backend<Block> + 'static,
 		Backend::State: sp_api::StateBackend<BlakeTwo256>,
-		Api: polkadot_client::RuntimeApiCollection<StateBackend = Backend::State>,
+		Api: relay_mvp_client::RuntimeApiCollection<StateBackend = Backend::State>,
 		Client: AbstractClient<Block, Backend, Api = Api> + 'static,
 	{
 		// Revert consensus-related components.

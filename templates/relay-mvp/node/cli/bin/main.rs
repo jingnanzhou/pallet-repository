@@ -19,8 +19,8 @@
 //! Substrate Node CLI
 
 #![warn(missing_docs)]
-pub use polkadot_cli::{error::Error};
+pub use relay_mvp_cli::{error::Error};
 type Result<T> = std::result::Result<T, Error>;
 fn main() -> Result<()> {
-	polkadot_cli::run()
+	relay_mvp_cli::run()
 }

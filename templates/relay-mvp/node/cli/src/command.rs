@@ -17,8 +17,8 @@
 use crate::cli::{Cli, Subcommand};
 use frame_benchmarking_cli::{BenchmarkCmd, ExtrinsicFactory, SUBSTRATE_REFERENCE_HARDWARE};
 use futures::future::TryFutureExt;
-use log::info;
-use polkadot_client::benchmarking::{
+
+use relay_mvp_client::benchmarking::{
 	benchmark_inherent_data, ExistentialDepositProvider, RemarkBuilder, TransferKeepAliveBuilder,
 };
 use sc_cli::{RuntimeVersion, SubstrateCli};
@@ -126,7 +126,8 @@ fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), Str
 	}
 }
 
-/// Unwraps a [`polkadot_client::Client`] into the concrete runtime client.
+/// Unwraps a [`relay_mvp_client::Client`] into the concrete runtime client.
+/* *
 macro_rules! unwrap_client {
 	(
 		$client:ident,
@@ -134,13 +135,13 @@ macro_rules! unwrap_client {
 	) => {
 		match $client.as_ref() {
 			#[cfg(feature = "westend-native")]
-			polkadot_client::Client::Westend($client) => $code,
+			relay_mvp_client::Client::Westend($client) => $code,
 			#[allow(unreachable_patterns)]
 			_ => Err(Error::CommandNotImplemented),
 		}
 	};
 }
-
+*/
 /// Runs performance checks.
 /// Should only be used in release build since the check would take too much time otherwise.
 fn host_perf_check() -> Result<()> {
@@ -390,23 +391,27 @@ pub fn run() -> Result<()> {
 					let (client, backend, _, _) = service::new_chain_ops(&mut config, None)?;
 					let db = backend.expose_db();
 					let storage = backend.expose_storage();
+					cmd.run(config, client.clone(), db, storage).map_err(Error::SubstrateCli);
 
-					unwrap_client!(
-						client,
-						cmd.run(config, client.clone(), db, storage).map_err(Error::SubstrateCli)
-					)
+
+//					unwrap_client!(
+//						client,
+//						cmd.run(config, client.clone(), db, storage).map_err(Error::SubstrateCli)
+//					)
 				}),
 				BenchmarkCmd::Block(cmd) => runner.sync_run(|mut config| {
 					let (client, _, _, _) = service::new_chain_ops(&mut config, None)?;
 
-					unwrap_client!(client, cmd.run(client.clone()).map_err(Error::SubstrateCli))
+//					unwrap_client!(client, cmd.run(client.clone()).map_err(Error::SubstrateCli))
+					cmd.run(client.clone()).map_err(Error::SubstrateCli)
+
 				}),
 				// These commands are very similar and can be handled in nearly the same way.
 				BenchmarkCmd::Extrinsic(_) | BenchmarkCmd::Overhead(_) => {
 					ensure_dev(chain_spec).map_err(Error::Other)?;
 					runner.sync_run(|mut config| {
 						let (client, _, _, _) = service::new_chain_ops(&mut config, None)?;
-						let header = client.header(BlockId::Number(0_u32.into())).unwrap().unwrap();
+						let header = client.header(&BlockId::Number(0_u32.into())).unwrap().unwrap();
 						let inherent_data = benchmark_inherent_data(header)
 							.map_err(|e| format!("generating inherent data: {:?}", e))?;
 						let remark_builder = RemarkBuilder::new(client.clone());
@@ -423,29 +428,26 @@ pub fn run() -> Result<()> {
 									Box::new(remark_builder),
 									Box::new(tka_builder),
 								]);
-
-								unwrap_client!(
-									client,
-									cmd.run(
-										client.clone(),
-										inherent_data,
-										Vec::new(),
-										&ext_factory
-									)
-									.map_err(Error::SubstrateCli)
-								)
-							},
-							BenchmarkCmd::Overhead(cmd) => unwrap_client!(
-								client,
 								cmd.run(
+									client.clone(),
+									inherent_data,
+									Vec::new(),
+									&ext_factory
+								)
+								.map_err(Error::SubstrateCli)
+
+//								unwrap_client!(
+//									client,
+//								)
+							},
+							BenchmarkCmd::Overhead(cmd) => cmd.run(
 									config,
 									client.clone(),
 									inherent_data,
 									Vec::new(),
 									&remark_builder
 								)
-								.map_err(Error::SubstrateCli)
-							),
+								.map_err(Error::SubstrateCli),
 							_ => unreachable!("Ensured by the outside match; qed"),
 						}
 					})
@@ -457,7 +459,7 @@ pub fn run() -> Result<()> {
 
 					#[cfg(feature = "westend-native")]
 					return runner.sync_run(|config| {
-						cmd.run::<service::relay_mvp_runtime::Block, service::WestendExecutorDispatch>(config)
+						cmd.run::<service::relay_mvp_runtime::Block, service::RelayExecutorDispatch>(config)
 							.map_err(|e| Error::SubstrateCli(e))
 					});
 
@@ -501,7 +503,7 @@ pub fn run() -> Result<()> {
 			if chain_spec.is_westend() {
 				return runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::westend_runtime::Block, service::WestendExecutorDispatch>(
+						cmd.run::<service::westend_runtime::Block, service::RelayExecutorDispatch>(
 							config,
 						)
 						.map_err(Error::SubstrateCli),

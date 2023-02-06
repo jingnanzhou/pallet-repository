@@ -44,9 +44,9 @@ pub type FullClient<RuntimeApi, ExecutorDispatch> =
 	sc_service::TFullClient<Block, RuntimeApi, NativeElseWasmExecutor<ExecutorDispatch>>;
 
 /// The native executor instance for Westend.
-pub struct WestendExecutorDispatch;
+pub struct RelayExecutorDispatch;
 
-impl sc_executor::NativeExecutionDispatch for WestendExecutorDispatch {
+impl sc_executor::NativeExecutionDispatch for RelayExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;
 
 	fn dispatch(method: &str, data: &[u8]) -> Option<Vec<u8>> {
@@ -180,6 +180,7 @@ pub trait ClientHandle {
 
 /// Unwraps a [`Client`] into the concrete client type and
 /// provides the concrete runtime as `runtime`.
+/* 
 macro_rules! with_client {
 	{
 		// The client instance that should be unwrapped.
@@ -199,15 +200,16 @@ macro_rules! with_client {
 		}
 	}
 }
+*/
 // Make the macro available only within this crate.
-pub(crate) use with_client;
+//pub(crate) use with_client;
 
 /// A client instance of Polkadot.
 ///
 /// See [`ExecuteWithClient`] for more information.
 #[derive(Clone)]
 pub enum Client {
-	Westend(Arc<FullClient<relay_mvp_runtime::RuntimeApi, WestendExecutorDispatch>>),
+	Westend(Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>),
 }
 
 

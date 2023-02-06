@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-cli"
+name = "relay-mvp-cli"
 description = "Polkadot Relay-chain Client Node"
 version.workspace = true
 authors.workspace = true
@@ -25,9 +25,9 @@ thiserror = "1.0.31"
 futures = "0.3.21"
 pyro = { package = "pyroscope", version = "0.3.1", optional = true }
 
-service = { package = "polkadot-service", path = "../service", default-features = false, optional = true }
+service = { package = "relay-mvp-service", path = "../service", default-features = false, optional = true }
 relay-mvp-runtime = { path = "../../runtime", optional = true }
-polkadot-client = { path = "../client", optional = true }
+relay-mvp-client = { path = "../client", optional = true }
 polkadot-node-core-pvf = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35", optional = true }
 polkadot-performance-test = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35", optional = true }
 
@@ -54,7 +54,7 @@ cli = [
 	"sc-tracing",
 	"frame-benchmarking-cli",
 	"try-runtime-cli",
-	"polkadot-client",
+	"relay-mvp-client",
 	"polkadot-node-core-pvf",
 ]
 runtime-benchmarks = [

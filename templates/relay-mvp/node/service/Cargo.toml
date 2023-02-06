@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-service"
+name = "relay-mvp-service"
 rust-version = "1.60"
 version.workspace = true
 authors.workspace = true
@@ -81,7 +81,7 @@ lru = "0.8"
 # Polkadot
 polkadot-node-core-parachains-inherent = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35" }
 polkadot-overseer = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35"}
-polkadot-client = { path = "../client", default-features = false, optional = true }
+relay-mvp-client = { path = "../client", default-features = false, optional = true }
 
 
 polkadot-parachain = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35" }
@@ -144,7 +144,7 @@ full-node = [
 	"polkadot-availability-bitfield-distribution",
 	"polkadot-availability-distribution",
 	"polkadot-availability-recovery",
-	"polkadot-client",
+	"relay-mvp-client",
 	"polkadot-collator-protocol",
 	"polkadot-dispute-distribution",
 	"polkadot-gossip-support",
@@ -168,7 +168,7 @@ full-node = [
 # Configure the native runtimes to use. Polkadot is enabled by default.
 #
 # Validators require the native runtime currently
-westend-native = [ "relay-mvp-runtime", "relay-mvp-runtime-constants", "polkadot-client/westend" ]
+westend-native = [ "relay-mvp-runtime", "relay-mvp-runtime-constants", "relay-mvp-client/westend" ]
 
 runtime-benchmarks = [
 	"relay-mvp-runtime?/runtime-benchmarks",
@@ -184,6 +184,6 @@ fast-runtime = [
 
 malus = ["full-node"]
 runtime-metrics = [
-	"polkadot-client/runtime-metrics",
+	"relay-mvp-client/runtime-metrics",
 	"relay-mvp-runtime?/runtime-metrics",
 ]
