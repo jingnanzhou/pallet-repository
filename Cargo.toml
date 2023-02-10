@@ -29,17 +29,20 @@ members = [
 
     "templates/relay-mvp/runtime",
 
+    "templates/para-mvp/node",
+    "templates/para-mvp/runtime",
 
-    "templates/poc/node",
-    "templates/poc/runtime",
 
-    "templates/mvp/node/cli",
-    "templates/mvp/node/executor",
-    "templates/mvp/node/inspect",
-    "templates/mvp/node/primitives",
-    "templates/mvp/node/rpc",
-    "templates/mvp/node/testing",
-    "templates/mvp/runtime",
+    "templates/solo-poc/node",
+    "templates/solo-poc/runtime",
+
+    "templates/solo-mvp/node/cli",
+    "templates/solo-mvp/node/executor",
+    "templates/solo-mvp/node/inspect",
+    "templates/solo-mvp/node/primitives",
+    "templates/solo-mvp/node/rpc",
+    "templates/solo-mvp/node/testing",
+    "templates/solo-mvp/runtime",
 
     "pallets/template",
 
