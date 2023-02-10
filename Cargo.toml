@@ -1,19 +1,51 @@
+[package]
+name = "pallet-repository"
+description = "blockchain building blocks based on Polkadot and the Substrate framework."
+license = "GPL-3.0-only"
+rust-version = "1.64.0" # workspace properties
+readme = "README.md"
+authors.workspace = true
+edition.workspace = true
+version.workspace = true
+
+[workspace.package]
+authors = ["Jingnan Zhou"]
+edition = "2021"
+repository = "https://github.com/iservicebus/pallet-repository.git"
+version = "0.9.37"
+
+[[bin]]
+name = "pallet_repository"
+path = "src/main.rs"
+
+
+
 [workspace]
 members = [
-    "nodes/poc-template",
-    "nodes/mvp-template/cli",
 
-    "nodes/mvp-template/executor",
-    "nodes/mvp-template/inspect",
-    "nodes/mvp-template/primitives",
-    "nodes/mvp-template/rpc",
-    "nodes/mvp-template/testing",
+    "templates/relay-mvp/node/cli",
+    "templates/relay-mvp/node/client",
+    "templates/relay-mvp/node/service",
 
+    "templates/relay-mvp/runtime",
+
+
+    "templates/poc/node",
+    "templates/poc/runtime",
+
+    "templates/mvp/node/cli",
+    "templates/mvp/node/executor",
+    "templates/mvp/node/inspect",
+    "templates/mvp/node/primitives",
+    "templates/mvp/node/rpc",
+    "templates/mvp/node/testing",
+    "templates/mvp/runtime",
 
     "pallets/template",
-    "runtimes/poc-runtime",
-    "runtimes/mvp-runtime",
 
 ]
 [profile.release]
+# Polkadot runtime requires unwinding.
 panic = "unwind"
+opt-level = 3
+
