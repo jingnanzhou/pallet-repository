@@ -1,13 +1,12 @@
+
 [package]
 name = "solo-mvp-node-testing"
-version = "3.0.0-dev"
-authors = ["Parity Technologies <admin@parity.io>"]
-description = "Test utilities for Substrate node."
-edition = "2021"
-license = "GPL-3.0-or-later WITH Classpath-exception-2.0"
-homepage = "https://substrate.io"
-repository = "https://github.com/paritytech/substrate/"
-publish = false
+description = "Test utilities for solo mvp node"
+build = "build.rs"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
@@ -19,9 +18,9 @@ futures = "0.3.21"
 log = "0.4.17"
 tempfile = "3.1.0"
 frame-system = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"  }
-solo-mvp-node-executor = { version = "3.0.0-dev", path = "../executor" }
-solo-mvp-node-primitives = { version = "2.0.0", path = "../primitives" }
-solo-mvp-runtime = { version = "3.0.0-dev", path = "../../runtime" }
+solo-mvp-node-executor = {  path = "../executor" }
+solo-mvp-node-primitives = { path = "../primitives" }
+solo-mvp-runtime = { path = "../../runtime" }
 pallet-assets = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 pallet-asset-tx-payment = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 pallet-transaction-payment = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"  }

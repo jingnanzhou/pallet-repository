@@ -1,16 +1,54 @@
----
-title: Installation
----
 
-This guide is for reference only, please check the latest information on getting starting with Substrate 
-[here](https://docs.substrate.io/main-docs/install/).
 
-This page will guide you through the **2 steps** needed to prepare a computer for **Substrate** development.
-Since Substrate is built with [the Rust programming language](https://www.rust-lang.org/), the first
-thing you will need to do is prepare the computer for Rust development - these steps will vary based
-on the computer's operating system. Once Rust is configured, you will use its toolchains to interact
-with Rust projects; the commands for Rust's toolchains will be the same for all supported,
-Unix-based operating systems.
+# Node Structure
+
+Node has seven components
+
+## cli
+cli uses clap to define subcommand structure
+
+## command 
+command define the command action for each subcommand
+
+## service
+
+Service has a few steps:
+
+### create partial node
+partial node includes
+
+ #### client
+ client includes executor, which execute runtime
+
+#### backend
+backend includes persistent database to store blockchain
+
+#### select chain
+
+#### transaction pool
+
+#### import queue
+
+
+### create full node
+full node is created based on partial node. full node creates
+#### network
+#### rpc
+
+fulll node uses task manager to start network, rpc, and consensus services
+
+
+## rpc
+
+## executor
+
+
+## chain-spec
+
+
+
+
+
 
 ## Build dependencies
 

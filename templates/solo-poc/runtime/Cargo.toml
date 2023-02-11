@@ -1,13 +1,12 @@
+
 [package]
 name = "solo-poc-runtime"
-version = "4.0.0-dev"
-description = "A fresh FRAME-based Substrate node, ready for hacking."
-authors = ["Substrate DevHub <https://github.com/substrate-developer-hub>"]
-homepage = "https://substrate.io/"
-edition = "2021"
-license = "Unlicense"
-publish = false
-repository = "https://github.com/substrate-developer-hub/substrate-node-template/"
+description = "proof of concept for solo chain runtime."
+build = "build.rs"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

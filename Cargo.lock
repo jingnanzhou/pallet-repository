@@ -6553,20 +6553,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "parachain-info"
-version = "0.1.0"
-source = "git+https://github.com/paritytech/cumulus.git?branch=polkadot-v0.9.37#09418fc04c2608b123f36ca80f16df3d2096753b"
-dependencies = [
- "cumulus-primitives-core",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
-]
-
-[[package]]
-name = "parachain-template-node"
-version = "0.1.0"
+name = "para-mvp-node"
+version = "0.9.37"
 dependencies = [
  "clap 4.1.4",
  "cumulus-client-cli",
@@ -6582,7 +6570,7 @@ dependencies = [
  "jsonrpsee",
  "log",
  "pallet-transaction-payment-rpc",
- "parachain-template-runtime",
+ "para-mvp-runtime",
  "parity-scale-codec",
  "polkadot-cli",
  "polkadot-primitives",
@@ -6623,8 +6611,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "parachain-template-runtime"
-version = "0.1.0"
+name = "para-mvp-runtime"
+version = "0.9.37"
 dependencies = [
  "cumulus-pallet-aura-ext",
  "cumulus-pallet-dmp-queue",
@@ -6676,6 +6664,18 @@ dependencies = [
  "xcm",
  "xcm-builder",
  "xcm-executor",
+]
+
+[[package]]
+name = "parachain-info"
+version = "0.1.0"
+source = "git+https://github.com/paritytech/cumulus.git?branch=polkadot-v0.9.37#09418fc04c2608b123f36ca80f16df3d2096753b"
+dependencies = [
+ "cumulus-primitives-core",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
 ]
 
 [[package]]
@@ -11117,7 +11117,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-node-cli"
-version = "3.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "array-bytes 4.2.0",
  "assert_cmd",
@@ -11202,7 +11202,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-node-executor"
-version = "3.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "criterion",
  "frame-benchmarking",
@@ -11238,7 +11238,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-node-inspect"
-version = "0.9.0-dev"
+version = "0.9.37"
 dependencies = [
  "clap 4.1.4",
  "parity-scale-codec",
@@ -11254,7 +11254,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-node-primitives"
-version = "2.0.0"
+version = "0.9.37"
 dependencies = [
  "frame-system",
  "parity-scale-codec",
@@ -11266,7 +11266,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-node-rpc"
-version = "3.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "jsonrpsee",
  "mmr-rpc",
@@ -11297,7 +11297,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-node-testing"
-version = "3.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "frame-system",
  "fs_extra",
@@ -11332,7 +11332,7 @@ dependencies = [
 
 [[package]]
 name = "solo-mvp-runtime"
-version = "3.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "frame-benchmarking",
  "frame-election-provider-support",
@@ -11397,7 +11397,7 @@ dependencies = [
 
 [[package]]
 name = "solo-poc-node"
-version = "4.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "clap 4.1.4",
  "frame-benchmarking",
@@ -11440,7 +11440,7 @@ dependencies = [
 
 [[package]]
 name = "solo-poc-runtime"
-version = "4.0.0-dev"
+version = "0.9.37"
 dependencies = [
  "frame-benchmarking",
  "frame-executive",

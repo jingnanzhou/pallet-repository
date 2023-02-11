@@ -1,20 +1,19 @@
+
 [package]
 name = "solo-mvp-node-rpc"
-version = "3.0.0-dev"
-authors = ["Parity Technologies <admin@parity.io>"]
-description = "Substrate node rpc methods."
-edition = "2021"
-license = "Apache-2.0"
-homepage = "https://substrate.io"
-repository = "https://github.com/paritytech/substrate/"
-publish = false
+description = "solo mvp node rpc methods."
+build = "build.rs"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 jsonrpsee = { version = "0.16.2", features = ["server"] }
-solo-mvp-node-primitives = { version = "2.0.0", path = "../primitives" }
+solo-mvp-node-primitives = {  path = "../primitives" }
 pallet-transaction-payment-rpc = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"}
 mmr-rpc = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 sc-chain-spec = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
