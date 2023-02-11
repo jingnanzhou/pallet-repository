@@ -259,14 +259,14 @@ impl sc_client_api::BlockBackend<Block> for Client {
         }
 	}
 
-	fn block(&self, id: &BlockId<Block>) -> sp_blockchain::Result<Option<SignedBlock<Block>>> {
+	fn block(&self, hash: <Block as BlockT>::Hash) -> sp_blockchain::Result<Option<SignedBlock<Block>>> {
 
         match self {
             Client::Westend(client) => {
                 #[allow(unused_imports)]
                 use relay_mvp_runtime as runtime;
 				{
-					client.block(id)
+					client.block(hash)
 				}
 
 			}
@@ -274,19 +274,20 @@ impl sc_client_api::BlockBackend<Block> for Client {
 
 	}
 
-	fn block_status(&self, id: &BlockId<Block>) -> sp_blockchain::Result<BlockStatus> {
-        match self {
+
+	fn block_status(&self, hash: <Block as BlockT>::Hash) -> sp_blockchain::Result<BlockStatus> {
+		match self {
             Client::Westend(client) => {
                 #[allow(unused_imports)]
                 use relay_mvp_runtime as runtime;
 				{
-					client.block_status(id)
+					client.block_status(hash)
 				}
 	
 			}
         }
-
 	}
+
 
 	fn justifications(
 		&self,
@@ -555,7 +556,7 @@ impl sc_client_api::StorageProvider<Block, crate::FullBackend> for Client {
 }
 
 impl sp_blockchain::HeaderBackend<Block> for Client {
-	fn header(&self, id: BlockId<Block>) -> sp_blockchain::Result<Option<Header>> {
+	fn header(&self, hash: Hash) -> sp_blockchain::Result<Option<Header>> {
 
 		match self {
 
@@ -563,12 +564,14 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 				#[allow(unused_imports)]
 				use relay_mvp_runtime as runtime;
 				{
-					client.header(&id)
+					client.header(hash)
 				}
 					
 			}
 		}
 	}
+
+
 
 	fn info(&self) -> sp_blockchain::Info<Block> {
 
@@ -586,7 +589,11 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 
 	}
 
-	fn status(&self, id: BlockId<Block>) -> sp_blockchain::Result<sp_blockchain::BlockStatus> {
+
+
+
+
+	fn status(&self, hash: Hash) -> sp_blockchain::Result<sp_blockchain::BlockStatus> {
 
         match self {
 
@@ -594,7 +601,7 @@ impl sp_blockchain::HeaderBackend<Block> for Client {
 				#[allow(unused_imports)]
 				use relay_mvp_runtime as runtime;
 				{
-					client.status(id)
+					client.status(hash)
 				}
 			}
 		}

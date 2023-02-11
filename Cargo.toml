@@ -1,10 +1,6 @@
-[[bin]]
-name = "relay-mvp-runtime"
-path = "src/main.rs"
-
 [package]
 name = "pallet-repository"
-description = "Implementation of a `https://polkadot.network` node in Rust based on the Substrate framework."
+description = "blockchain building blocks based on Polkadot and the Substrate framework."
 license = "GPL-3.0-only"
 rust-version = "1.64.0" # workspace properties
 readme = "README.md"
@@ -13,12 +9,14 @@ edition.workspace = true
 version.workspace = true
 
 [workspace.package]
-authors = ["Parity Technologies <admin@parity.io>"]
+authors = ["Jingnan Zhou"]
 edition = "2021"
-repository = "https://github.com/paritytech/polkadot.git"
-version = "0.9.35"
+repository = "https://github.com/iservicebus/pallet-repository.git"
+version = "0.9.37"
 
-
+[[bin]]
+name = "pallet_repository"
+path = "src/main.rs"
 
 
 
@@ -29,20 +27,22 @@ members = [
     "templates/relay-mvp/node/client",
     "templates/relay-mvp/node/service",
 
-
     "templates/relay-mvp/runtime",
 
+    "templates/para-mvp/node",
+    "templates/para-mvp/runtime",
 
-    "templates/poc/node",
-    "templates/poc/runtime",
 
-    "templates/mvp/node/cli",
-    "templates/mvp/node/executor",
-    "templates/mvp/node/inspect",
-    "templates/mvp/node/primitives",
-    "templates/mvp/node/rpc",
-    "templates/mvp/node/testing",
-    "templates/mvp/runtime",
+    "templates/solo-poc/node",
+    "templates/solo-poc/runtime",
+
+    "templates/solo-mvp/node/cli",
+    "templates/solo-mvp/node/executor",
+    "templates/solo-mvp/node/inspect",
+    "templates/solo-mvp/node/primitives",
+    "templates/solo-mvp/node/rpc",
+    "templates/solo-mvp/node/testing",
+    "templates/solo-mvp/runtime",
 
     "pallets/template",
 

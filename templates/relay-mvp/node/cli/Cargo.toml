@@ -1,6 +1,6 @@
 [package]
 name = "relay-mvp-cli"
-description = "Polkadot Relay-chain Client Node"
+description = "mvp for Relay-chain Client Node"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -28,21 +28,21 @@ pyro = { package = "pyroscope", version = "0.3.1", optional = true }
 service = { package = "relay-mvp-service", path = "../service", default-features = false, optional = true }
 relay-mvp-runtime = { path = "../../runtime", optional = true }
 relay-mvp-client = { path = "../client", optional = true }
-polkadot-node-core-pvf = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35", optional = true }
-polkadot-performance-test = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35", optional = true }
+polkadot-node-core-pvf = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37", optional = true }
+polkadot-performance-test = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37", optional = true }
 
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.35" }
-sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.35" }
-frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.35" }
-try-runtime-cli = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.35" }
-sc-cli = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.35" }
-sc-service = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.35" }
-polkadot-node-metrics = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.35" }
-sc-tracing = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.35" }
-sc-sysinfo = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.35" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.37" }
+try-runtime-cli = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.37" }
+sc-cli = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.37" }
+sc-service = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.37" }
+polkadot-node-metrics = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
+sc-tracing = { git = "https://github.com/paritytech/substrate", optional = true , branch = "polkadot-v0.9.37" }
+sc-sysinfo = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
 
 [build-dependencies]
-substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.35" }
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
 
 [features]
 default = ["db", "cli", "hostperfcheck", "full-node", "westend-native"]
