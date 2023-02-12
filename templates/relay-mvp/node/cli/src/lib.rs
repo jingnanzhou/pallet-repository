@@ -16,7 +16,7 @@
 
 //! Polkadot CLI library.
 
-#![warn(missing_docs)]
+
 
 #[cfg(feature = "cli")]
 mod cli;
@@ -24,13 +24,14 @@ mod cli;
 mod command;
 #[cfg(feature = "cli")]
 pub mod error;
+
 #[cfg(all(feature = "hostperfcheck", build_type = "release"))]
 mod host_perf_check;
 
 #[cfg(feature = "full-node")]
 pub use service::RuntimeApiCollection;
 #[cfg(feature = "service")]
-pub use service::{self, Block, CoreApi, IdentifyVariant, ProvideRuntimeApi, TFullClient};
+pub use service::{self, Block, CoreApi,  ProvideRuntimeApi, TFullClient};
 
 #[cfg(feature = "malus")]
 pub use service::overseer::prepared_overseer_builder;

@@ -21,8 +21,9 @@ use futures::future::TryFutureExt;
 use relay_mvp_client::benchmarking::{
 	benchmark_inherent_data, ExistentialDepositProvider, RemarkBuilder, TransferKeepAliveBuilder,
 };
+
 use sc_cli::{RuntimeVersion, SubstrateCli};
-use service::{self, HeaderBackend, IdentifyVariant};
+use service::{self, HeaderBackend};
 use sp_core::crypto::Ss58AddressFormatRegistry;
 use sp_keyring::Sr25519Keyring;
 use std::net::ToSocketAddrs;
@@ -37,14 +38,14 @@ impl From<String> for Error {
 }
 
 type Result<T> = std::result::Result<T, Error>;
-
+/* 
 fn get_exec_name() -> Option<String> {
 	std::env::current_exe()
 		.ok()
 		.and_then(|pb| pb.file_name().map(|s| s.to_os_string()))
 		.and_then(|s| s.into_string().ok())
 }
-
+*/
 impl SubstrateCli for Cli {
 	fn impl_name() -> String {
 		"Parity Polkadot".into()
@@ -99,25 +100,20 @@ impl SubstrateCli for Cli {
 
 
 
-	fn native_runtime_version(spec: &Box<dyn service::ChainSpec>) -> &'static RuntimeVersion {
+	fn native_runtime_version(_spec: &Box<dyn service::ChainSpec>) -> &'static RuntimeVersion {
 			return &service::relay_mvp_runtime::VERSION
 	}
 }
 
-fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
-	let ss58_version = if spec.is_westend() {
-		Ss58AddressFormatRegistry::SubstrateAccount
-	} else {
-		Ss58AddressFormatRegistry::PolkadotAccount
-	}
-	.into();
+fn set_default_ss58_version(_spec: &Box<dyn service::ChainSpec>) {
+	let ss58_version = Ss58AddressFormatRegistry::SubstrateAccount.into();
 
 	sp_core::crypto::set_default_ss58_version(ss58_version);
 }
 
-const DEV_ONLY_ERROR_PATTERN: &'static str =
-	"can only use subcommand with --chain [polkadot-dev, kusama-dev, westend-dev, rococo-dev, wococo-dev], got ";
-
+//const DEV_ONLY_ERROR_PATTERN: &'static str =
+//	"can only use subcommand with --chain [polkadot-dev, kusama-dev, westend-dev, rococo-dev, wococo-dev], got ";
+/* 
 fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), String> {
 	if spec.is_dev() {
 		Ok(())
@@ -125,7 +121,7 @@ fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), Str
 		Err(format!("{}{}", DEV_ONLY_ERROR_PATTERN, spec.id()))
 	}
 }
-
+*/
 /// Unwraps a [`relay_mvp_client::Client`] into the concrete runtime client.
 /* *
 macro_rules! unwrap_client {
@@ -192,7 +188,7 @@ where
 	let chain_spec = &runner.config().chain_spec;
 
 	// Disallow BEEFY on production networks.
-	if cli.run.beefy && chain_spec.is_westend()
+	if cli.run.beefy 
 	{
 		return Err(Error::Other("BEEFY disallowed on production networks".to_string()))
 	}
@@ -408,7 +404,6 @@ pub fn run() -> Result<()> {
 				}),
 				// These commands are very similar and can be handled in nearly the same way.
 				BenchmarkCmd::Extrinsic(_) | BenchmarkCmd::Overhead(_) => {
-					ensure_dev(chain_spec).map_err(Error::Other)?;
 					runner.sync_run(|mut config| {
 						let (client, _, _, _) = service::new_chain_ops(&mut config, None)?;
 						let header = client.header(client.info().genesis_hash).unwrap().unwrap();
@@ -454,7 +449,6 @@ pub fn run() -> Result<()> {
 				},
 				BenchmarkCmd::Pallet(cmd) => {
 					set_default_ss58_version(chain_spec);
-					ensure_dev(chain_spec).map_err(Error::Other)?;
 
 
 					#[cfg(feature = "westend-native")]
@@ -496,12 +490,9 @@ pub fn run() -> Result<()> {
 			let task_manager = TaskManager::new(runner.config().tokio_handle.clone(), *registry)
 				.map_err(|e| Error::SubstrateService(sc_service::Error::Prometheus(e)))?;
 
-			ensure_dev(chain_spec).map_err(Error::Other)?;
 
 
-			#[cfg(feature = "westend-native")]
-			if chain_spec.is_westend() {
-				return runner.async_run(|config| {
+			runner.async_run(|config| {
 					Ok((
 						cmd.run::<service::westend_runtime::Block, service::RelayExecutorDispatch>(
 							config,
@@ -510,9 +501,6 @@ pub fn run() -> Result<()> {
 						task_manager,
 					))
 				})
-			}
-			#[cfg(not(feature = "westend-native"))]
-			panic!("No runtime feature (westend) is enabled")
 		},
 		#[cfg(not(feature = "try-runtime"))]
 		Some(Subcommand::TryRuntime) => Err(Error::Other(

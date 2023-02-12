@@ -89,7 +89,7 @@ pub use consensus_common::{block_validation::Chain, Proposal, SelectChain};
 use mmr_gadget::MmrGadget;
 #[cfg(feature = "full-node")]
 pub use relay_mvp_client::{
-	AbstractClient, Client, ClientHandle, ExecuteWithClient, FullBackend, FullClient,
+	 FullBackend, FullClient,
 	RuntimeApiCollection,
 };
 pub use polkadot_primitives::v2::{Block, BlockId, BlockNumber, CollatorPair, Hash, Id as ParaId};
@@ -231,7 +231,7 @@ pub enum Error {
 	NoRuntime,
 }
 
-/// Can be called for a `Configuration` to identify which network the configuration targets.
+/* 
 pub trait IdentifyVariant {
 
 	/// Returns if this is a configuration for the `Westend` network.
@@ -251,6 +251,7 @@ impl IdentifyVariant for Box<dyn ChainSpec> {
 	}
 }
 
+*/
 #[cfg(feature = "full-node")]
 pub fn open_database(db_source: &DatabaseSource) -> Result<Arc<dyn Database>, Error> {
 	let parachains_db = match db_source {
@@ -717,7 +718,7 @@ where
 	let role = config.role.clone();
 	let force_authoring = config.force_authoring;
 	let backoff_authoring_blocks = {
-		let mut backoff = sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging::default();
+		let  backoff = sc_consensus_slots::BackoffAuthoringOnFinalizedHeadLagging::default();
 
 
 		Some(backoff)
@@ -743,7 +744,7 @@ where
 	let overseer_connector = OverseerConnector::default();
 	let overseer_handle = Handle::new(overseer_connector.handle());
 
-	let chain_spec = config.chain_spec.cloned_box();
+	//let chain_spec = config.chain_spec.cloned_box();
 
 	let local_keystore = basics.keystore_container.local_keystore();
 	let auth_or_collator = role.is_authority() || is_collator.is_collator();
@@ -1240,7 +1241,7 @@ where
 
 	Ok(NewFull { task_manager, client, overseer_handle, network, rpc_handlers, backend })
 }
-
+/*
 #[cfg(feature = "full-node")]
 macro_rules! chain_ops {
 	($config:expr, $jaeger_agent:expr, $telemetry_worker_handle:expr; $scope:ident, $executor:ident, $variant:ident) => {{
@@ -1266,7 +1267,7 @@ macro_rules! chain_ops {
 		Ok((Arc::new(Client::$variant(client)), backend, import_queue, task_manager))
 	}};
 }
-
+*/
 /// Builds a new object suitable for chain operations.
 #[cfg(feature = "full-node")]
 pub fn new_chain_ops(
@@ -1381,10 +1382,12 @@ pub fn revert_backend(
 
 	revert_approval_voting(parachains_db.clone(), hash)?;
 	revert_chain_selection(parachains_db, hash)?;
+
 	// Revert Substrate consensus related components
 
-//	client.execute_with(RevertConsensus { blocks, backend })?;
-	RevertConsensus::execute_with_client::<_, _, FullBackend>(RevertConsensus { blocks, backend }, client.clone())? ;
+	babe::revert(client.clone(), backend, blocks)?;
+	grandpa::revert(client, blocks)?;
+
 	Ok(())
 }
 
@@ -1423,7 +1426,7 @@ fn revert_approval_voting(db: Arc<dyn Database>, hash: Hash) -> sp_blockchain::R
 		.revert_to(hash)
 		.map_err(|err| sp_blockchain::Error::Backend(err.to_string()))
 }
-
+/* 
 struct RevertConsensus {
 	blocks: BlockNumber,
 	backend: Arc<FullBackend>,
@@ -1447,3 +1450,4 @@ impl ExecuteWithClient for RevertConsensus {
 		Ok(())
 	}
 }
+*/
