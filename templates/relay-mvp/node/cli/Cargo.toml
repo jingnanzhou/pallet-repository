@@ -4,14 +4,14 @@ description = "mvp for Relay-chain Client Node"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
-default-run = "relay-mvp"
+default-run = "relay-mvp-node"
 [package.metadata.wasm-pack.profile.release]
 # `wasm-opt` has some problems on Linux, see
 # https://github.com/rustwasm/wasm-pack/issues/781 etc.
 wasm-opt = false
 
 [[bin]]
-name = "relay-mvp"
+name = "relay-mvp-node"
 path = "bin/main.rs"
 required-features = ["cli"]
 
