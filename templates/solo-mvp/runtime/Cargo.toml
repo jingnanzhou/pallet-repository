@@ -50,7 +50,9 @@ frame-system-rpc-runtime-api = { version = "4.0.0-dev", default-features = false
 frame-try-runtime = { version = "0.10.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" , optional = true }
 
 #pallets
-#mvp
+
+#mvp primitives
+
 pallet-timestamp = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 pallet-indices = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"  }
 pallet-authorship = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"  }
@@ -115,27 +117,12 @@ pallet-assets = { version = "4.0.0-dev", default-features = false, git = "https:
 #used by frame-system::offchain
 pallet-asset-tx-payment = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 
-
 #test only
 pallet-root-testing = { version = "1.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"}
 
-
 #extended
 
-
-
-
-
-
-
-
 #consensus
-
-
-
-
-
-
 
 [build-dependencies]
 substrate-wasm-builder = { version = "5.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
