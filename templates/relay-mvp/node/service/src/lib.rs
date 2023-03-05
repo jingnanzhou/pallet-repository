@@ -18,7 +18,6 @@
 
 #![deny(unused_results)]
 
-pub mod chain_spec;
 mod grandpa_support;
 mod parachains_db;
 mod relay_chain_selection;
@@ -31,6 +30,7 @@ pub use self::overseer::{OverseerGen, OverseerGenArgs, RealOverseerGen};
 
 #[cfg(test)]
 mod tests;
+use relay_mvp_chain_config::relay_mvp_runtime;
 
 #[cfg(feature = "full-node")]
 use {
@@ -84,7 +84,6 @@ use telemetry::{Telemetry, TelemetryWorkerHandle};
 pub use relay_mvp_client::RelayExecutorDispatch;
 
 
-pub use chain_spec::{WestendChainSpec};
 pub use consensus_common::{block_validation::Chain, Proposal, SelectChain};
 use mmr_gadget::MmrGadget;
 #[cfg(feature = "full-node")]
@@ -110,8 +109,6 @@ pub use sp_runtime::{
 	},
 };
 
-#[cfg(feature = "westend-native")]
-pub use relay_mvp_runtime;
 
 
 
@@ -231,27 +228,6 @@ pub enum Error {
 	NoRuntime,
 }
 
-/* 
-pub trait IdentifyVariant {
-
-	/// Returns if this is a configuration for the `Westend` network.
-	fn is_westend(&self) -> bool;
-
-
-	/// Returns true if this configuration is for a development network.
-	fn is_dev(&self) -> bool;
-}
-
-impl IdentifyVariant for Box<dyn ChainSpec> {
-	fn is_westend(&self) -> bool {
-		self.id().starts_with("westend") || self.id().starts_with("wnd")
-	}
-	fn is_dev(&self) -> bool {
-		self.id().ends_with("dev")
-	}
-}
-
-*/
 #[cfg(feature = "full-node")]
 pub fn open_database(db_source: &DatabaseSource) -> Result<Arc<dyn Database>, Error> {
 	let parachains_db = match db_source {

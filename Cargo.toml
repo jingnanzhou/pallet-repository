@@ -27,14 +27,21 @@ members = [
     "templates/relay-mvp/node/client",
     "templates/relay-mvp/node/service",
 
-    "templates/relay-mvp/runtime",
+    "templates/relay-mvp/chains/westend/runtime",
+    "templates/relay-mvp/chains/westend/chain-spec",
+
+    "templates/relay-mvp/chain-config",
+
 
     "templates/para-mvp/node",
     "templates/para-mvp/runtime",
+  
 
 
     "templates/solo-poc/node",
     "templates/solo-poc/runtime",
+
+
 
     "templates/solo-mvp/node/cli",
     "templates/solo-mvp/node/executor",

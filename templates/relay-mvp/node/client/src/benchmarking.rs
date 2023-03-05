@@ -20,6 +20,7 @@ use polkadot_primitives::v2::{AccountId, Balance};
 use sp_core::{Pair, H256};
 use sp_keyring::Sr25519Keyring;
 use sp_runtime::OpaqueExtrinsic;
+use relay_mvp_chain_config::relay_mvp_runtime;
 
 use crate::*;
 

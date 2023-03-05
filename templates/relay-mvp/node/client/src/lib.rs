@@ -30,6 +30,7 @@ use sp_runtime::{
 	traits::{BlakeTwo256, Block as BlockT},
 };
 use std::sync::Arc;
+use relay_mvp_chain_config::relay_mvp_runtime;
 
 pub mod benchmarking;
 

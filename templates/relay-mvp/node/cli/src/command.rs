@@ -22,6 +22,8 @@ use relay_mvp_client::benchmarking::{
 	benchmark_inherent_data, ExistentialDepositProvider, RemarkBuilder, TransferKeepAliveBuilder,
 };
 
+use relay_mvp_chain_config::relay_chain_spec;
+
 use sc_cli::{RuntimeVersion, SubstrateCli};
 use service::{self, HeaderBackend};
 use sp_core::crypto::Ss58AddressFormatRegistry;
@@ -84,15 +86,15 @@ impl SubstrateCli for Cli {
 						.into(),
 				),
 
-			"prod" => Box::new(service::chain_spec::westend_config()?),
-			"dev" => Box::new(service::chain_spec::westend_development_config()?),
-			"local" => Box::new(service::chain_spec::westend_local_testnet_config()?),
-			"staging" => Box::new(service::chain_spec::westend_staging_testnet_config()?),
+			"prod" => Box::new(relay_chain_spec::westend_config()?),
+			"dev" => Box::new(relay_chain_spec::westend_development_config()?),
+			"local" => Box::new(relay_chain_spec::westend_local_testnet_config()?),
+			"staging" => Box::new(relay_chain_spec::westend_staging_testnet_config()?),
 
 			path => {
 				let path = std::path::PathBuf::from(path);
 
-					Box::new(service::WestendChainSpec::from_json_file(path)?)
+					Box::new(relay_chain_spec::WestendChainSpec::from_json_file(path)?)
 			},
 		};
 		Ok(spec)
@@ -101,7 +103,7 @@ impl SubstrateCli for Cli {
 
 
 	fn native_runtime_version(_spec: &Box<dyn service::ChainSpec>) -> &'static RuntimeVersion {
-			return &service::relay_mvp_runtime::VERSION
+			return &relay_mvp_chain_config::relay_mvp_runtime::VERSION
 	}
 }
 
@@ -453,7 +455,7 @@ pub fn run() -> Result<()> {
 
 					#[cfg(feature = "westend-native")]
 					return runner.sync_run(|config| {
-						cmd.run::<service::relay_mvp_runtime::Block, service::RelayExecutorDispatch>(config)
+						cmd.run::<relay_mvp_chain_config::relay_mvp_runtime::Block, service::RelayExecutorDispatch>(config)
 							.map_err(|e| Error::SubstrateCli(e))
 					});
 
