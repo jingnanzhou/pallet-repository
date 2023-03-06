@@ -8880,9 +8880,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "456c603be3e8d448b072f410900c09faf164fbce2d480456f50eea6e25f9c848"
 
 [[package]]
-name = "relay-mvp-chain-config"
+name = "relay-mvp-chain-selection"
 version = "0.9.37"
 dependencies = [
+ "rococo-chain-runtime",
+ "rococo-chain-runtime-constants",
+ "rococo-chain-spec",
  "westend-chain-runtime",
  "westend-chain-runtime-constants",
  "westend-chain-spec",
@@ -8900,7 +8903,7 @@ dependencies = [
  "polkadot-node-metrics",
  "polkadot-performance-test",
  "pyroscope",
- "relay-mvp-chain-config",
+ "relay-mvp-chain-selection",
  "relay-mvp-client",
  "relay-mvp-service",
  "sc-cli",
@@ -8930,7 +8933,7 @@ dependencies = [
  "polkadot-node-core-parachains-inherent",
  "polkadot-primitives",
  "polkadot-runtime-common",
- "relay-mvp-chain-config",
+ "relay-mvp-chain-selection",
  "sc-client-api",
  "sc-consensus",
  "sc-executor",
@@ -9011,7 +9014,7 @@ dependencies = [
  "polkadot-runtime-parachains",
  "polkadot-statement-distribution",
  "polkadot-test-client",
- "relay-mvp-chain-config",
+ "relay-mvp-chain-selection",
  "relay-mvp-client",
  "sc-authority-discovery",
  "sc-basic-authorship",
@@ -9152,6 +9155,147 @@ checksum = "7e9562ea1d70c0cc63a34a22d977753b50cca91cc6b6527750463bd5dd8697bc"
 dependencies = [
  "libc",
  "librocksdb-sys",
+]
+
+[[package]]
+name = "rococo-chain-runtime"
+version = "0.9.37"
+dependencies = [
+ "beefy-merkle-tree",
+ "frame-benchmarking",
+ "frame-executive",
+ "frame-remote-externalities",
+ "frame-support",
+ "frame-system",
+ "frame-system-benchmarking",
+ "frame-system-rpc-runtime-api",
+ "frame-try-runtime",
+ "hex-literal",
+ "log",
+ "pallet-authority-discovery",
+ "pallet-authorship",
+ "pallet-babe",
+ "pallet-balances",
+ "pallet-beefy",
+ "pallet-beefy-mmr",
+ "pallet-bounties",
+ "pallet-child-bounties",
+ "pallet-collective",
+ "pallet-democracy",
+ "pallet-elections-phragmen",
+ "pallet-grandpa",
+ "pallet-identity",
+ "pallet-im-online",
+ "pallet-indices",
+ "pallet-membership",
+ "pallet-mmr",
+ "pallet-multisig",
+ "pallet-nis",
+ "pallet-offences",
+ "pallet-preimage",
+ "pallet-proxy",
+ "pallet-recovery",
+ "pallet-scheduler",
+ "pallet-session",
+ "pallet-society",
+ "pallet-staking",
+ "pallet-state-trie-migration",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "pallet-tips",
+ "pallet-transaction-payment",
+ "pallet-transaction-payment-rpc-runtime-api",
+ "pallet-treasury",
+ "pallet-utility",
+ "pallet-vesting",
+ "pallet-xcm",
+ "pallet-xcm-benchmarks",
+ "parity-scale-codec",
+ "polkadot-parachain",
+ "polkadot-primitives",
+ "polkadot-runtime-common",
+ "polkadot-runtime-parachains",
+ "rococo-chain-runtime-constants",
+ "scale-info",
+ "separator",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "smallvec",
+ "sp-api",
+ "sp-authority-discovery",
+ "sp-beefy",
+ "sp-block-builder",
+ "sp-consensus-babe",
+ "sp-core",
+ "sp-inherents",
+ "sp-io",
+ "sp-keyring",
+ "sp-mmr-primitives",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-staking",
+ "sp-std",
+ "sp-tracing",
+ "sp-transaction-pool",
+ "sp-trie",
+ "sp-version",
+ "static_assertions",
+ "substrate-wasm-builder",
+ "tiny-keccak",
+ "tokio",
+ "xcm",
+ "xcm-builder",
+ "xcm-executor",
+]
+
+[[package]]
+name = "rococo-chain-runtime-constants"
+version = "0.9.37"
+dependencies = [
+ "frame-support",
+ "polkadot-primitives",
+ "polkadot-runtime-common",
+ "smallvec",
+ "sp-core",
+ "sp-runtime",
+ "sp-weights",
+]
+
+[[package]]
+name = "rococo-chain-spec"
+version = "0.9.37"
+dependencies = [
+ "assert_matches",
+ "env_logger 0.9.3",
+ "frame-support",
+ "futures",
+ "hex-literal",
+ "log",
+ "pallet-im-online",
+ "pallet-staking",
+ "polkadot-node-subsystem-test-helpers",
+ "polkadot-primitives",
+ "polkadot-runtime-parachains",
+ "polkadot-test-client",
+ "rococo-chain-runtime",
+ "rococo-chain-runtime-constants",
+ "sc-chain-spec",
+ "sc-client-api",
+ "sc-finality-grandpa",
+ "sc-service",
+ "sc-sync-state-rpc",
+ "sc-telemetry",
+ "serde",
+ "serde_json",
+ "sp-authority-discovery",
+ "sp-beefy",
+ "sp-consensus-babe",
+ "sp-core",
+ "sp-runtime",
+ "sp-state-machine",
+ "tempfile",
 ]
 
 [[package]]
@@ -10763,6 +10907,12 @@ name = "semver-parser"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "388a1df253eca08550bef6c72392cfe7c30914bf41df5269b68cbd6ff8f570a3"
+
+[[package]]
+name = "separator"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f97841a747eef040fcd2e7b3b9a220a7205926e60488e673d9e4926d27772ce5"
 
 [[package]]
 name = "serde"

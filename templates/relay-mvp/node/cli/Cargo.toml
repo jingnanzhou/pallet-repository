@@ -26,7 +26,7 @@ futures = "0.3.21"
 pyro = { package = "pyroscope", version = "0.3.1", optional = true }
 
 service = { package = "relay-mvp-service", path = "../service", default-features = false, optional = true }
-relay-mvp-chain-config = { path = "../../chain-config", optional = true }
+relay-mvp-chain-selection = { path = "../../chain-selection", optional = true }
 relay-mvp-client = { path = "../client", optional = true }
 polkadot-node-core-pvf = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37", optional = true }
 polkadot-performance-test = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37", optional = true }
@@ -45,7 +45,7 @@ sc-sysinfo = { git = "https://github.com/paritytech/substrate", branch = "polkad
 substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
 
 [features]
-default = ["db", "cli", "hostperfcheck", "full-node", "westend-native"]
+default = ["db", "cli", "hostperfcheck", "full-node", "chain-selection"]
 db = ["service/db"]
 cli = [
 	"clap",
@@ -55,7 +55,6 @@ cli = [
 	"frame-benchmarking-cli",
 	"try-runtime-cli",
 	"relay-mvp-client",
-	"relay-mvp-chain-config",
 	"polkadot-node-core-pvf",
 ]
 runtime-benchmarks = [
@@ -72,7 +71,7 @@ hostperfcheck = ["polkadot-performance-test"]
 # Configure the native runtimes to use. Polkadot is enabled by default.
 #
 # Validators require the native runtime currently
-westend-native = ["service/westend-native"]
+chain-selection= ["relay-mvp-chain-selection", "service/chain-selection", "relay-mvp-client/chain-selection"]
 
 malus = ["full-node", "service/malus"]
 runtime-metrics = ["service/runtime-metrics", "polkadot-node-metrics/runtime-metrics"]

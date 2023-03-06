@@ -30,7 +30,7 @@ pub use self::overseer::{OverseerGen, OverseerGenArgs, RealOverseerGen};
 
 #[cfg(test)]
 mod tests;
-use relay_mvp_chain_config::relay_mvp_runtime;
+pub use relay_mvp_chain_selection::relay_mvp_runtime;
 
 #[cfg(feature = "full-node")]
 use {
@@ -224,7 +224,7 @@ pub enum Error {
 	DatabasePathRequired,
 
 	#[cfg(feature = "full-node")]
-	#[error("Expected at least one of polkadot, kusama, westend or rococo runtime feature")]
+	#[error("Expected at chain-selection feature")]
 	NoRuntime,
 }
 
@@ -1303,7 +1303,7 @@ pub fn build_full(
 	hwbench: Option<sc_sysinfo::HwBench>,
 ) -> Result<NewFull<Arc<FullClient<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch>>>, Error> {
 
-	#[cfg(feature = "westend-native")]
+	#[cfg(feature = "chain-selection")]
 	return new_full::<relay_mvp_runtime::RuntimeApi, RelayExecutorDispatch, _>(
 			config,
 			is_collator,
@@ -1320,7 +1320,7 @@ pub fn build_full(
 		);
 //		.map(|full| full.with_client(Client::Westend));
 
-	#[cfg(not(feature = "westend-native"))]
+	#[cfg(not(feature = "chain-selection"))]
 	Err(Error::NoRuntime)
 }
 

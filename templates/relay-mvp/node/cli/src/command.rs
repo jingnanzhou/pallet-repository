@@ -22,8 +22,6 @@ use relay_mvp_client::benchmarking::{
 	benchmark_inherent_data, ExistentialDepositProvider, RemarkBuilder, TransferKeepAliveBuilder,
 };
 
-use relay_mvp_chain_config::relay_chain_spec;
-
 use sc_cli::{RuntimeVersion, SubstrateCli};
 use service::{self, HeaderBackend};
 use sp_core::crypto::Ss58AddressFormatRegistry;
@@ -86,15 +84,15 @@ impl SubstrateCli for Cli {
 						.into(),
 				),
 
-			"prod" => Box::new(relay_chain_spec::westend_config()?),
-			"dev" => Box::new(relay_chain_spec::westend_development_config()?),
-			"local" => Box::new(relay_chain_spec::westend_local_testnet_config()?),
-			"staging" => Box::new(relay_chain_spec::westend_staging_testnet_config()?),
+			"prod" => Box::new(relay_mvp_chain_selection::prod_chain_spec()?),
+			"dev" => Box::new(relay_mvp_chain_selection::dev_chain_spec()?),
+			"local" => Box::new(relay_mvp_chain_selection::local_chain_spec()?),
+			"staging" => Box::new(relay_mvp_chain_selection::staging_chain_spec()?),
 
 			path => {
 				let path = std::path::PathBuf::from(path);
 
-					Box::new(relay_chain_spec::WestendChainSpec::from_json_file(path)?)
+					Box::new(relay_mvp_chain_selection::RelayChainSpec::from_json_file(path)?)
 			},
 		};
 		Ok(spec)
@@ -103,7 +101,7 @@ impl SubstrateCli for Cli {
 
 
 	fn native_runtime_version(_spec: &Box<dyn service::ChainSpec>) -> &'static RuntimeVersion {
-			return &relay_mvp_chain_config::relay_mvp_runtime::VERSION
+			return &relay_mvp_chain_selection::relay_mvp_runtime::VERSION
 	}
 }
 
@@ -112,34 +110,6 @@ fn set_default_ss58_version(_spec: &Box<dyn service::ChainSpec>) {
 
 	sp_core::crypto::set_default_ss58_version(ss58_version);
 }
-
-//const DEV_ONLY_ERROR_PATTERN: &'static str =
-//	"can only use subcommand with --chain [polkadot-dev, kusama-dev, westend-dev, rococo-dev, wococo-dev], got ";
-/* 
-fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), String> {
-	if spec.is_dev() {
-		Ok(())
-	} else {
-		Err(format!("{}{}", DEV_ONLY_ERROR_PATTERN, spec.id()))
-	}
-}
-*/
-/// Unwraps a [`relay_mvp_client::Client`] into the concrete runtime client.
-/* *
-macro_rules! unwrap_client {
-	(
-		$client:ident,
-		$code:expr
-	) => {
-		match $client.as_ref() {
-			#[cfg(feature = "westend-native")]
-			relay_mvp_client::Client::Westend($client) => $code,
-			#[allow(unreachable_patterns)]
-			_ => Err(Error::CommandNotImplemented),
-		}
-	};
-}
-*/
 /// Runs performance checks.
 /// Should only be used in release build since the check would take too much time otherwise.
 fn host_perf_check() -> Result<()> {
@@ -453,13 +423,13 @@ pub fn run() -> Result<()> {
 					set_default_ss58_version(chain_spec);
 
 
-					#[cfg(feature = "westend-native")]
+					#[cfg(feature = "chain-selection")]
 					return runner.sync_run(|config| {
-						cmd.run::<relay_mvp_chain_config::relay_mvp_runtime::Block, service::RelayExecutorDispatch>(config)
+						cmd.run::<relay_mvp_chain_selection::relay_mvp_runtime::Block, service::RelayExecutorDispatch>(config)
 							.map_err(|e| Error::SubstrateCli(e))
 					});
 
-					#[cfg(not(feature = "westend-native"))]
+					#[cfg(not(feature = "chain-selection"))]
 					#[allow(unreachable_code)]
 					Err(service::Error::NoRuntime.into())
 				},
@@ -496,7 +466,7 @@ pub fn run() -> Result<()> {
 
 			runner.async_run(|config| {
 					Ok((
-						cmd.run::<service::westend_runtime::Block, service::RelayExecutorDispatch>(
+						cmd.run::<relay_mvp_chain_selection::relay_mvp_runtime::Block, service::RelayExecutorDispatch>(
 							config,
 						)
 						.map_err(Error::SubstrateCli),

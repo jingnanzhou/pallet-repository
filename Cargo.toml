@@ -30,7 +30,11 @@ members = [
     "templates/relay-mvp/chains/westend/runtime",
     "templates/relay-mvp/chains/westend/chain-spec",
 
-    "templates/relay-mvp/chain-config",
+    "templates/relay-mvp/chains/rococo/runtime",
+    "templates/relay-mvp/chains/rococo/chain-spec",
+
+
+    "templates/relay-mvp/chain-selection",
 
 
     "templates/para-mvp/node",

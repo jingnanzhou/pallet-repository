@@ -1,0 +1,33 @@
+[package]
+name = "relay-mvp-chain-selection"
+rust-version = "1.60"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+# westend chain
+westend-chain-runtime = { path = "../chains/westend/runtime" , optional = true}
+westend-chain-spec = { path = "../chains/westend/chain-spec" , optional = true}
+westend-chain-runtime-constants = { path = "../chains/westend/runtime/constants", optional = true }
+
+# rococo chain
+rococo-chain-runtime = { path = "../chains/rococo/runtime" , optional = true}
+rococo-chain-spec = { path = "../chains/rococo/chain-spec" , optional = true}
+rococo-chain-runtime-constants = { path = "../chains/rococo/runtime/constants", optional = true }
+
+
+[features]
+default = ["rococo"]
+westend = ["westend-chain-runtime", "westend-chain-spec", "westend-chain-runtime-constants" ]
+rococo = ["rococo-chain-runtime", "rococo-chain-spec", "rococo-chain-runtime-constants" ]
+
+#runtime-metrics = ["westend-chain-runtime/runtime-metrics"]
+#try-runtime = ["westend-chain-runtime/try-runtime"]
+#runtime-benchmarks = ["westend-chain-runtime/runtime-benchmarks"]
+fast-runtime = []
+
+
+runtime-metrics = ["rococo-chain-runtime/runtime-metrics"]
+try-runtime = ["rococo-chain-runtime/try-runtime"]
+runtime-benchmarks = ["rococo-chain-runtime/runtime-benchmarks"]

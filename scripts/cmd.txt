@@ -1,0 +1,28 @@
+
+# Generate a raw chain spec
+
+./relay-mvp-node build-spec --chain local --disable-default-bootnode --raw > raw-local.json
+
+
+# Alice
+./relay-mvp-node --chain raw-local.json --alice --tmp
+
+# Bob (In a separate terminal)
+./relay-mvp-node --chain raw-local.json --bob --tmp --port 30334
+
+
+
+# Export genesis state
+./para-mvp-node export-genesis-state > genesis-state
+
+# Export genesis wasm
+./para-mvp-node export-genesis-wasm > genesis-wasm
+
+# Collator1
+./para-mvp-node --collator --alice --force-authoring --tmp --port 40335 --ws-port 9946 -- --execution wasm --chain ./raw-local.json --port 30335
+
+# Collator2
+./para-mvp-node --collator --bob --force-authoring --tmp --port 40336 --ws-port 9947 -- --execution wasm --chain ./raw-local.json --port 30336
+
+# Parachain Full Node 1
+./para-mvp-node --tmp --port 40337 --ws-port 9948 -- --execution wasm --chain ./raw-local.json --port 30337

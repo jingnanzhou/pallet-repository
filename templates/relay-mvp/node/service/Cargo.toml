@@ -95,7 +95,7 @@ polkadot-runtime-parachains = { git = "https://github.com/paritytech/polkadot", 
 polkadot-node-network-protocol = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
 
 
-relay-mvp-chain-config = { path = "../../chain-config", optional = true }
+relay-mvp-chain-selection = { path = "../../chain-selection", optional = true }
 
 
 
@@ -131,7 +131,7 @@ assert_matches = "1.5.0"
 tempfile = "3.2"
 
 [features]
-default = ["db", "full-node", "westend-native"]
+default = ["db", "full-node", "chain-selection"]
 
 db = [
 	"service/rocksdb"
@@ -167,22 +167,22 @@ full-node = [
 # Configure the native runtimes to use. Polkadot is enabled by default.
 #
 # Validators require the native runtime currently
-westend-native = [ "relay-mvp-chain-config", "relay-mvp-client/westend" ]
+chain-selection = ["relay-mvp-chain-selection", "relay-mvp-client/chain-selection"]
 
 runtime-benchmarks = [
-	"relay-mvp-chain-config?/runtime-benchmarks",
+	"relay-mvp-chain-selection?/runtime-benchmarks",
 
 	"service/runtime-benchmarks",
 ]
 try-runtime = [
-	"relay-mvp-chain-config?/try-runtime",
+	"relay-mvp-chain-selection?/try-runtime",
 ]
 fast-runtime = [
-	"relay-mvp-chain-config?/fast-runtime",
+	"relay-mvp-chain-selection?/fast-runtime",
 ]
 
 malus = ["full-node"]
 runtime-metrics = [
 	"relay-mvp-client/runtime-metrics",
-	"relay-mvp-chain-config?/runtime-metrics",
+	"relay-mvp-chain-selection?/runtime-metrics",
 ]
