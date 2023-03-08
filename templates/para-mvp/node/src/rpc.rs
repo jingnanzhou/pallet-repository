@@ -6,7 +6,7 @@
 #![warn(missing_docs)]
 
 use std::sync::Arc;
-
+use para_mvp_chain_selection::para_mvp_runtime;
 use para_mvp_runtime::{opaque::Block, AccountId, Balance, Index as Nonce};
 
 use sc_client_api::AuxStore;

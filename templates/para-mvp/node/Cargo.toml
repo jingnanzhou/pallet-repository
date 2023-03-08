@@ -16,7 +16,7 @@ serde = { version = "1.0.152", features = ["derive"] }
 jsonrpsee = { version = "0.16.2", features = ["server"] }
 
 # Local
-para-mvp-runtime = { path = "../runtime" }
+para-mvp-chain-selection = { path = "../chain-selection" }
 
 # Substrate
 frame-benchmarking = { git = "https://github.com/paritytech/substrate", "branch" = "polkadot-v0.9.37" }
@@ -76,10 +76,10 @@ substrate-build-script-utils = { git = "https://github.com/paritytech/substrate"
 default = []
 runtime-benchmarks = [
 	"try-runtime-cli/try-runtime",
-	"para-mvp-runtime/runtime-benchmarks",
+	"para-mvp-chain-selection/runtime-benchmarks",
 	"polkadot-cli/runtime-benchmarks",
 ]
 try-runtime = [
 	"try-runtime-cli/try-runtime",
-	"para-mvp-runtime/try-runtime"
+	"para-mvp-chain-selection/try-runtime"
 ]

@@ -6553,6 +6553,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "para-mvp-chain-selection"
+version = "0.9.37"
+dependencies = [
+ "para-sample-chain-spec",
+ "para-sample-runtime",
+]
+
+[[package]]
 name = "para-mvp-node"
 version = "0.9.37"
 dependencies = [
@@ -6570,7 +6578,7 @@ dependencies = [
  "jsonrpsee",
  "log",
  "pallet-transaction-payment-rpc",
- "para-mvp-runtime",
+ "para-mvp-chain-selection",
  "parity-scale-codec",
  "polkadot-cli",
  "polkadot-primitives",
@@ -6611,7 +6619,42 @@ dependencies = [
 ]
 
 [[package]]
-name = "para-mvp-runtime"
+name = "para-sample-chain-spec"
+version = "0.9.37"
+dependencies = [
+ "assert_matches",
+ "cumulus-primitives-core",
+ "env_logger 0.9.3",
+ "frame-support",
+ "futures",
+ "hex-literal",
+ "log",
+ "pallet-im-online",
+ "pallet-staking",
+ "para-sample-runtime",
+ "polkadot-node-subsystem-test-helpers",
+ "polkadot-primitives",
+ "polkadot-runtime-parachains",
+ "polkadot-test-client",
+ "sc-chain-spec",
+ "sc-client-api",
+ "sc-finality-grandpa",
+ "sc-service",
+ "sc-sync-state-rpc",
+ "sc-telemetry",
+ "serde",
+ "serde_json",
+ "sp-authority-discovery",
+ "sp-beefy",
+ "sp-consensus-babe",
+ "sp-core",
+ "sp-runtime",
+ "tempfile",
+ "xcm",
+]
+
+[[package]]
+name = "para-sample-runtime"
 version = "0.9.37"
 dependencies = [
  "cumulus-pallet-aura-ext",

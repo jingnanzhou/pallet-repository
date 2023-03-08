@@ -29,17 +29,17 @@ members = [
 
     "templates/relay-mvp/chains/westend/runtime",
     "templates/relay-mvp/chains/westend/chain-spec",
-
     "templates/relay-mvp/chains/rococo/runtime",
     "templates/relay-mvp/chains/rococo/chain-spec",
-
-
     "templates/relay-mvp/chain-selection",
 
 
     "templates/para-mvp/node",
-    "templates/para-mvp/runtime",
-  
+    "templates/para-mvp/chains/sample/runtime",
+    "templates/para-mvp/chains/sample/chain-spec",
+    "templates/para-mvp/chain-selection",
+
+
 
 
     "templates/solo-poc/node",

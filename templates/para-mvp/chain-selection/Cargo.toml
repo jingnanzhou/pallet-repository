@@ -1,0 +1,21 @@
+[package]
+name = "para-mvp-chain-selection"
+rust-version = "1.60"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+# para sample chain
+para-sample-runtime = { path = "../chains/sample/runtime" , optional = true}
+para-sample-chain-spec = { path = "../chains/sample/chain-spec" , optional = true}
+
+
+[features]
+default = ["sample"]
+sample = ["para-sample-runtime", "para-sample-chain-spec" ]
+
+#runtime-metrics = ["westend-chain-runtime/runtime-metrics"]
+try-runtime = ["para-sample-runtime/try-runtime"]
+runtime-benchmarks = ["para-sample-runtime/runtime-benchmarks"]
+fast-runtime = []
