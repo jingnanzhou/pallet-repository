@@ -29,6 +29,7 @@ use sp_core::{storage::well_known_keys, traits::Externalities};
 use sp_runtime::{
 	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
 };
+use solo_mvp_chain_selection::solo_mvp_runtime;
 
 use solo_mvp_runtime::{
 	constants::{currency::*, time::SLOT_DURATION},

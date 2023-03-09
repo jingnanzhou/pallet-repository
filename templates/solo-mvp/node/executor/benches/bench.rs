@@ -18,6 +18,8 @@
 use sol_mvp_node_executor as node_executor;
 use solo_mvp_node_primitives as node_primitives;
 use solo_mvp_node_testing as node_testing;
+use solo_mvp_chain_selection::solo_mvp_runtime;
+
 use solo_mvp_runtime as mvp_runtime;
 
 use codec::{Decode, Encode};

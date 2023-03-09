@@ -2,7 +2,6 @@
 [package]
 name = "solo-mvp-node-rpc"
 description = "solo mvp node rpc methods."
-build = "build.rs"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true

@@ -1,6 +1,7 @@
 //! Service and ServiceFactory implementation. Specialized wrapper over substrate service.
 
-use solo_poc_runtime::{self, opaque::Block, RuntimeApi, api::dispatch, native_version};
+
+use solo_poc_chain_selection::solo_poc_runtime::{opaque::Block, RuntimeApi, api::dispatch, native_version};
 use sc_client_api::BlockBackend;
 use sc_consensus_aura::{ImportQueueParams, SlotProportion, StartAuraParams};
 pub use sc_executor::NativeElseWasmExecutor;

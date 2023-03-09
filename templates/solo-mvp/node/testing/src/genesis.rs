@@ -19,6 +19,8 @@
 //! Genesis Configuration.
 
 use crate::keyring::*;
+use solo_mvp_chain_selection::solo_mvp_runtime;
+
 use solo_mvp_runtime::{
 	constants::currency::*, wasm_binary_unwrap, AccountId, AssetsConfig, BabeConfig,
 	BalancesConfig, GenesisConfig, GrandpaConfig, IndicesConfig, SessionConfig, 

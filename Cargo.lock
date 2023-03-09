@@ -11208,6 +11208,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solo-mvp-chain-selection"
+version = "0.9.37"
+dependencies = [
+ "solo-mvp-sample-chain-spec",
+ "solo-mvp-sample-runtime",
+]
+
+[[package]]
 name = "solo-mvp-node-cli"
 version = "0.9.37"
 dependencies = [
@@ -11261,11 +11269,11 @@ dependencies = [
  "serde",
  "serde_json",
  "soketto",
+ "solo-mvp-chain-selection",
  "solo-mvp-node-executor",
  "solo-mvp-node-inspect",
  "solo-mvp-node-primitives",
  "solo-mvp-node-rpc",
- "solo-mvp-runtime",
  "sp-api",
  "sp-authority-discovery",
  "sp-authorship",
@@ -11312,9 +11320,9 @@ dependencies = [
  "parity-scale-codec",
  "sc-executor",
  "scale-info",
+ "solo-mvp-chain-selection",
  "solo-mvp-node-primitives",
  "solo-mvp-node-testing",
- "solo-mvp-runtime",
  "sp-application-crypto",
  "sp-consensus-babe",
  "sp-core",
@@ -11405,9 +11413,9 @@ dependencies = [
  "sc-consensus",
  "sc-executor",
  "sc-service",
+ "solo-mvp-chain-selection",
  "solo-mvp-node-executor",
  "solo-mvp-node-primitives",
- "solo-mvp-runtime",
  "sp-api",
  "sp-block-builder",
  "sp-blockchain",
@@ -11423,7 +11431,45 @@ dependencies = [
 ]
 
 [[package]]
-name = "solo-mvp-runtime"
+name = "solo-mvp-sample-chain-spec"
+version = "0.9.37"
+dependencies = [
+ "array-bytes 4.2.0",
+ "assert_matches",
+ "env_logger 0.9.3",
+ "frame-support",
+ "futures",
+ "hex-literal",
+ "log",
+ "pallet-assets",
+ "pallet-im-online",
+ "pallet-staking",
+ "polkadot-node-subsystem-test-helpers",
+ "polkadot-primitives",
+ "polkadot-runtime-parachains",
+ "polkadot-test-client",
+ "rand 0.8.5",
+ "sc-chain-spec",
+ "sc-client-api",
+ "sc-finality-grandpa",
+ "sc-service",
+ "sc-sync-state-rpc",
+ "sc-telemetry",
+ "serde",
+ "serde_json",
+ "solo-mvp-node-primitives",
+ "solo-mvp-sample-runtime",
+ "sp-authority-discovery",
+ "sp-beefy",
+ "sp-consensus-babe",
+ "sp-core",
+ "sp-finality-grandpa",
+ "sp-runtime",
+ "tempfile",
+]
+
+[[package]]
+name = "solo-mvp-sample-runtime"
 version = "0.9.37"
 dependencies = [
  "frame-benchmarking",
@@ -11488,6 +11534,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "solo-poc-chain-selection"
+version = "0.9.37"
+dependencies = [
+ "solo-poc-sample-chain-spec",
+ "solo-poc-sample-runtime",
+]
+
+[[package]]
 name = "solo-poc-node"
 version = "0.9.37"
 dependencies = [
@@ -11513,7 +11567,7 @@ dependencies = [
  "sc-telemetry",
  "sc-transaction-pool",
  "sc-transaction-pool-api",
- "solo-poc-runtime",
+ "solo-poc-chain-selection",
  "sp-api",
  "sp-block-builder",
  "sp-blockchain",
@@ -11531,7 +11585,44 @@ dependencies = [
 ]
 
 [[package]]
-name = "solo-poc-runtime"
+name = "solo-poc-sample-chain-spec"
+version = "0.9.37"
+dependencies = [
+ "array-bytes 4.2.0",
+ "assert_matches",
+ "env_logger 0.9.3",
+ "frame-support",
+ "futures",
+ "hex-literal",
+ "log",
+ "pallet-assets",
+ "pallet-im-online",
+ "pallet-staking",
+ "polkadot-node-subsystem-test-helpers",
+ "polkadot-primitives",
+ "polkadot-runtime-parachains",
+ "polkadot-test-client",
+ "rand 0.8.5",
+ "sc-chain-spec",
+ "sc-client-api",
+ "sc-finality-grandpa",
+ "sc-service",
+ "sc-sync-state-rpc",
+ "sc-telemetry",
+ "serde",
+ "serde_json",
+ "solo-poc-sample-runtime",
+ "sp-authority-discovery",
+ "sp-beefy",
+ "sp-consensus-aura",
+ "sp-core",
+ "sp-finality-grandpa",
+ "sp-runtime",
+ "tempfile",
+]
+
+[[package]]
+name = "solo-poc-sample-runtime"
 version = "0.9.37"
 dependencies = [
  "frame-benchmarking",

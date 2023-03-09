@@ -1,0 +1,21 @@
+[package]
+name = "solo-mvp-chain-selection"
+rust-version = "1.60"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+# solo poc sample chain
+solo-mvp-sample-runtime = { path = "../chains/sample/runtime" , optional = true}
+solo-mvp-sample-chain-spec = { path = "../chains/sample/chain-spec" , optional = true}
+
+
+[features]
+default = ["sample"]
+sample = ["solo-mvp-sample-runtime", "solo-mvp-sample-chain-spec" ]
+
+#runtime-metrics = ["solo-mvp-sample-runtime/runtime-metrics"]
+try-runtime = ["solo-mvp-sample-runtime/try-runtime"]
+runtime-benchmarks = ["solo-mvp-sample-runtime/runtime-benchmarks"]
+fast-runtime = []

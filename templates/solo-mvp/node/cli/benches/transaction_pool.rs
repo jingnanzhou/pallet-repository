@@ -51,7 +51,7 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 		None,
 	);
 
-	let spec = Box::new(node_cli::chain_spec::development_config());
+	let spec = Box::new(solo_mvp_chain_selection::dev_chain_spec());
 
 	let config = Configuration {
 		impl_name: "BenchmarkImpl".into(),

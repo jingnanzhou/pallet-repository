@@ -43,7 +43,9 @@ members = [
 
 
     "templates/solo-poc/node",
-    "templates/solo-poc/runtime",
+    "templates/solo-poc/chains/sample/runtime",
+    "templates/solo-poc/chains/sample/chain-spec",
+    "templates/solo-poc/chain-selection",
 
 
 
@@ -53,7 +55,10 @@ members = [
     "templates/solo-mvp/node/primitives",
     "templates/solo-mvp/node/rpc",
     "templates/solo-mvp/node/testing",
-    "templates/solo-mvp/runtime",
+    "templates/solo-mvp/chains/sample/runtime",
+    "templates/solo-mvp/chains/sample/chain-spec",
+    "templates/solo-mvp/chain-selection",
+
 
     "pallets/template",
 

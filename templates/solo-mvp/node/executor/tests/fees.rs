@@ -24,6 +24,8 @@ use frame_support::{
 	traits::Currency,
 	weights::{constants::ExtrinsicBaseWeight, IdentityFee, WeightToFee},
 };
+use solo_mvp_chain_selection::solo_mvp_runtime;
+
 use solo_mvp_runtime::{
 	constants::{currency::*, time::SLOT_DURATION},
 	Balances, CheckedExtrinsic, Multiplier, Runtime, RuntimeCall, TransactionByteFee,

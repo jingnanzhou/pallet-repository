@@ -17,6 +17,7 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 //! Utilities to build a `TestClient` for `kitchensink-runtime`.
+use solo_mvp_chain_selection::solo_mvp_runtime;
 
 use solo_mvp_runtime as mvp_runtime;
 use sc_service::client;

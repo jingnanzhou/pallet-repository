@@ -18,11 +18,13 @@
 
 use super::benchmarking::{inherent_benchmark_data, RemarkBuilder, TransferKeepAliveBuilder};
 use crate::{
-	chain_spec, service,
+	service,
 	service::{new_partial, FullClient},
 	Cli, Subcommand,
 };
 use frame_benchmarking_cli::*;
+use solo_mvp_chain_selection::solo_mvp_runtime;
+
 use solo_mvp_runtime::{ExistentialDeposit, RuntimeApi};
 use solo_mvp_node_executor::ExecutorDispatch;
 use solo_mvp_node_primitives::Block;
@@ -64,12 +66,12 @@ impl SubstrateCli for Cli {
 					"Please specify which chain you want to run, e.g. --dev or --chain=local"
 						.into(),
 				),
-			"dev" => Box::new(chain_spec::development_config()),
-			"local" => Box::new(chain_spec::local_testnet_config()),
-			"fir" | "flaming-fir" => Box::new(chain_spec::flaming_fir_config()?),
-			"staging" => Box::new(chain_spec::staging_testnet_config()),
+			"dev" => Box::new(solo_mvp_chain_selection::dev_chain_spec()),
+			"local" => Box::new(solo_mvp_chain_selection::test_chain_spec()),
+			"fir" | "flaming-fir" => Box::new(solo_mvp_chain_selection::fir_chain_spec()?),
+			"staging" => Box::new(solo_mvp_chain_selection::staging_chain_spec()),
 			path =>
-				Box::new(chain_spec::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
+				Box::new(solo_mvp_chain_selection::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
 		};
 		Ok(spec)
 	}

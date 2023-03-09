@@ -18,7 +18,7 @@
 use solo_mvp_node_cli as node_cli;
 
 use criterion::{criterion_group, criterion_main, BatchSize, Criterion, Throughput};
-
+use solo_mvp_chain_selection::solo_mvp_runtime;
 use solo_mvp_runtime::{constants::currency::*, BalancesCall};
 use node_cli::service::{create_extrinsic, FullClient};
 use sc_block_builder::{BlockBuilderProvider, BuiltBlock, RecordProof};
@@ -56,7 +56,7 @@ fn new_node(tokio_handle: Handle) -> node_cli::service::NewFullBase {
 		None,
 	);
 
-	let spec = Box::new(node_cli::chain_spec::development_config());
+	let spec = Box::new(solo_mvp_chain_selection::dev_chain_spec());
 
 	// NOTE: We enforce the use of the WASM runtime to benchmark block production using WASM.
 	let execution_strategy = sc_client_api::ExecutionStrategy::AlwaysWasm;

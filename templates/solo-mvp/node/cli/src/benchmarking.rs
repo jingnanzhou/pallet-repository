@@ -23,6 +23,7 @@
 use crate::service::{create_extrinsic, FullClient};
 use solo_mvp_node_primitives as node_primitives;
 
+use solo_mvp_chain_selection::solo_mvp_runtime;
 
 use solo_mvp_runtime::{BalancesCall, SystemCall};
 use node_primitives::{AccountId, Balance};

@@ -90,7 +90,7 @@ pallet-asset-tx-payment = { version = "4.0.0-dev", git = "https://github.com/par
 pallet-im-online = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"}
 
 # node-specific dependencies
-solo-mvp-runtime = {  path = "../../runtime" }
+solo-mvp-chain-selection = {  path = "../../chain-selection" }
 
 solo-mvp-node-rpc = {  path = "../rpc" }
 solo-mvp-node-primitives = { path = "../primitives" }
@@ -153,12 +153,12 @@ cli = [
 	"try-runtime-cli",
 ]
 runtime-benchmarks = [
-	"solo-mvp-runtime/runtime-benchmarks",
+	"solo-mvp-chain-selection/runtime-benchmarks",
 	"frame-benchmarking-cli/runtime-benchmarks"
 ]
 # Enable features that allow the runtime to be tried and debugged. Name might be subject to change
 # in the near future.
-try-runtime = ["solo-mvp-runtime/try-runtime", "try-runtime-cli/try-runtime"]
+try-runtime = ["solo-mvp-chain-selection/try-runtime", "try-runtime-cli/try-runtime"]
 
 [[bench]]
 name = "transaction_pool"

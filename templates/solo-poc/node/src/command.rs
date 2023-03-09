@@ -1,11 +1,11 @@
 use crate::{
 	benchmarking::{inherent_benchmark_data, RemarkBuilder, TransferKeepAliveBuilder},
-	chain_spec,
+	
 	cli::{Cli, Subcommand},
 	service,
 };
 use frame_benchmarking_cli::{BenchmarkCmd, ExtrinsicFactory, SUBSTRATE_REFERENCE_HARDWARE};
-use solo_poc_runtime::{Block, EXISTENTIAL_DEPOSIT, VERSION};
+use solo_poc_chain_selection::solo_poc_runtime::{Block, EXISTENTIAL_DEPOSIT, VERSION};
 use sc_cli::{ChainSpec, RuntimeVersion, SubstrateCli};
 use sc_service::PartialComponents;
 use sp_keyring::Sr25519Keyring;
@@ -37,10 +37,10 @@ impl SubstrateCli for Cli {
 
 	fn load_spec(&self, id: &str) -> Result<Box<dyn sc_service::ChainSpec>, String> {
 		Ok(match id {
-			"dev" => Box::new(chain_spec::development_config()?),
-			"" | "local" => Box::new(chain_spec::local_testnet_config()?),
+			"dev" => Box::new(solo_poc_chain_selection::dev_chain_spec()?),
+			"" | "local" => Box::new(solo_poc_chain_selection::test_chain_spec()?),
 			path =>
-				Box::new(chain_spec::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
+				Box::new(solo_poc_chain_selection::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
 		})
 	}
 

@@ -23,6 +23,7 @@ pub use sc_executor::NativeElseWasmExecutor;
 // Declare an instance of the native executor named `ExecutorDispatch`. Include the wasm binary as
 // the equivalent wasm code.
 pub struct ExecutorDispatch;
+use solo_mvp_chain_selection::solo_mvp_runtime;
 
 impl sc_executor::NativeExecutionDispatch for ExecutorDispatch {
 	type ExtendHostFunctions = frame_benchmarking::benchmarking::HostFunctions;

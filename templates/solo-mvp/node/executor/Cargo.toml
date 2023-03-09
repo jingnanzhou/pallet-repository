@@ -2,7 +2,6 @@
 [package]
 name = "solo-mvp-node-executor"
 description = "solo mvp node implementation in Rust."
-build = "build.rs"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -17,7 +16,7 @@ codec = { package = "parity-scale-codec", version = "3.0.0" }
 scale-info = { version = "2.1.1", features = ["derive"] }
 frame-benchmarking = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"}
 solo-mvp-node-primitives = {  path = "../primitives" }
-solo-mvp-runtime = {  path = "../../runtime" }
+solo-mvp-chain-selection = {  path = "../../chain-selection" }
 sc-executor = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 sp-core = { version = "7.0.0", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 sp-keystore = { version = "0.13.0", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }

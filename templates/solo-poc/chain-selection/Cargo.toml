@@ -1,0 +1,21 @@
+[package]
+name = "solo-poc-chain-selection"
+rust-version = "1.60"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+# solo poc sample chain
+solo-poc-sample-runtime = { path = "../chains/sample/runtime" , optional = true}
+solo-poc-sample-chain-spec = { path = "../chains/sample/chain-spec" , optional = true}
+
+
+[features]
+default = ["sample"]
+sample = ["solo-poc-sample-runtime", "solo-poc-sample-chain-spec" ]
+
+#runtime-metrics = ["solo-poc-sample-runtime/runtime-metrics"]
+try-runtime = ["solo-poc-sample-runtime/try-runtime"]
+runtime-benchmarks = ["solo-poc-sample-runtime/runtime-benchmarks"]
+fast-runtime = []

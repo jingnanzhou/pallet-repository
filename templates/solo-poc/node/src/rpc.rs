@@ -8,7 +8,7 @@
 use std::sync::Arc;
 
 use jsonrpsee::RpcModule;
-use solo_poc_runtime::{opaque::Block, AccountId, Balance, Index};
+use solo_poc_chain_selection::solo_poc_runtime::{opaque::Block, AccountId, Balance, Index};
 use sc_transaction_pool_api::TransactionPool;
 use sp_api::ProvideRuntimeApi;
 use sp_block_builder::BlockBuilder;

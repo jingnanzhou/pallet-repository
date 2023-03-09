@@ -1,6 +1,6 @@
 
 [package]
-name = "solo-mvp-runtime"
+name = "solo-mvp-sample-runtime"
 description = "mvp for solo chain runtime."
 build = "build.rs"
 version.workspace = true

@@ -1,0 +1,69 @@
+[package]
+name = "solo-poc-sample-chain-spec"
+rust-version = "1.60"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[dependencies]
+# Substrate Client
+beefy-primitives = { git = "https://github.com/paritytech/substrate", package = "sp-beefy" , branch = "polkadot-v0.9.37" }
+frame-support = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+grandpa = { package = "sc-finality-grandpa", git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sc-sync-state-rpc = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+
+
+# Substrate Pallets
+pallet-im-online = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+pallet-staking = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+
+
+# Polkadot
+polkadot-primitives = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
+polkadot-runtime-parachains = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
+
+
+# Substrate Primitives
+sp-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sc-chain-spec = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
+sc-service = {  git = "https://github.com/paritytech/substrate", default-features = false , branch = "polkadot-v0.9.37" }
+sc-telemetry = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
+sp-consensus-aura = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
+sp-finality-grandpa = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
+
+
+# frame dependencies
+pallet-assets = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"}
+
+
+
+# Polkadot Runtimes
+solo-poc-sample-runtime = { path = "../runtime", optional = true }
+
+
+
+
+# External Crates
+futures = "0.3.21"
+hex-literal = "0.3.4"
+serde = { version = "1.0.137", features = ["derive"] }
+serde_json = "1.0.81"
+rand = "0.8"
+array-bytes = "4.1"
+
+
+[dev-dependencies]
+polkadot-test-client = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37"}
+polkadot-node-subsystem-test-helpers = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
+env_logger = "0.9.0"
+log = "0.4.17"
+assert_matches = "1.5.0"
+tempfile = "3.2"
+
+[features]
+default = ["solo-poc-sample-runtime" ]
+
+

@@ -2,7 +2,6 @@
 [package]
 name = "solo-mvp-node-testing"
 description = "Test utilities for solo mvp node"
-build = "build.rs"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -20,7 +19,7 @@ tempfile = "3.1.0"
 frame-system = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"  }
 solo-mvp-node-executor = {  path = "../executor" }
 solo-mvp-node-primitives = { path = "../primitives" }
-solo-mvp-runtime = { path = "../../runtime" }
+solo-mvp-chain-selection = {  path = "../../chain-selection" }
 pallet-assets = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 pallet-asset-tx-payment = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37" }
 pallet-transaction-payment = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", "branch" = "polkadot-v0.9.37"  }
